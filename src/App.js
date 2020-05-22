@@ -1,18 +1,18 @@
 import React from 'react';
 import './App.css';
 
-import LoginSignup from './Components/LoginSignup';
+import LoginSignup from './components/LoginSignup';
 import Nav from './components/Nav';
+import ProfilePage from './components/ProfilePage';
 
 
 class App extends React.Component {
 
   state = {
     users: [],
+    gundams: [],
+    items: [],
     currentUserId: null,
-    userItems: [],
-    userGundams: [],
-    userBalance: []
   }
 
 
@@ -20,6 +20,14 @@ class App extends React.Component {
       fetch(`http://localhost:3000/users`)
       .then(resp => resp.json())
       .then(users => this.setState({ users}))
+
+      fetch('http://localhost:3000/gundams')
+      .then(resp => resp.json())
+      .then(gundams => this.setState({ gundams }))
+
+      fetch('http://localhost:3000/items')
+      .then(resp => resp.json())
+      .then(items => this.setState({ items }))
   }
 
   setCurrentUser = (user) => {
@@ -27,16 +35,18 @@ class App extends React.Component {
   }
 
   render() {
-    console.log('App State :>> ', this.state);
+    // console.log('App State :>> ', this.state);
     const {setCurrentUser} = this
-    const {users, currentUserId} = this.state
+    const {users, currentUserId, gundams, items} = this.state
     return (
       <div>
-        { currentUserId ? null : 
+        <Nav currentUserId={currentUserId} />
+        { currentUserId ? 
+         <ProfilePage items={items} gundams={gundams} currentUserId={currentUserId}/>
+         : 
         <LoginSignup setCurrentUser={setCurrentUser} users={users} />
       }
 
-        <Nav currentUserId={this.state.currentUserId} />
         {/* ternary based on currentuserId cant be null to show below, else show <login/signup/> */}
         {/* {<NavBar/>}
         below is the switch based on whats clicked(starts on profile) */}
