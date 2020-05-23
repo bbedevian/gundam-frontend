@@ -48,3 +48,8 @@
 .right-corner {
   flex-basis: 10%;
 }
+
+.image600{
+  width:100%;
+  max-width:600px;
+}

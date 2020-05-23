@@ -31,6 +31,8 @@ class ProfilePage extends Component {
 
 
 
+
+
     //√ fetch to joiner where userid = usergundam id
     // √filter gundams array (from App State) and setstate for Profile userGundams 
     //fetch to joiner of inventory where userid === .....
@@ -39,12 +41,13 @@ class ProfilePage extends Component {
     //PATCH to userGundams add item id to one of 4 slots, user determines which slot to put it in
 
     render() {
-        // console.log('Profile state :>> ', this.state);
+        // console.log('Profile state :>> ', this.state.equipped);
+        // need to match gundam_id with gundam_id in equipped to pass that object down. 
         const {userGundams, userItems, equipped} = this.state
         const {items} = this.props
         return (
             <div>
-                {userGundams.map(gundam => <ProfileGundam items={items} equipped={equipped} key={gundam.id} {...gundam} />)}
+                {userGundams.map(gundam => <ProfileGundam items={items} equipped={equipped} key={gundam.id} {...gundam} equipped={equipped}/>)}
                 {userItems.map(item => <Item key={item.id} {...item}/>)}
                 {/* map through useritems and return profile item */}
             </div>
