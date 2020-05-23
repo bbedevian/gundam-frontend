@@ -4,6 +4,7 @@ import './App.css';
 import LoginSignup from './components/LoginSignup';
 import Nav from './components/Nav';
 import ProfilePage from './components/ProfilePage';
+import Shop from './components/Shop';
 
 
 class App extends React.Component {
@@ -38,11 +39,13 @@ class App extends React.Component {
     // console.log('App State :>> ', this.state);
     const {setCurrentUser} = this
     const {users, currentUserId, gundams, items} = this.state
+    const currentUser = users.find(user => user.id === currentUserId)
     return (
       <div>
         <Nav currentUserId={currentUserId} />
         { currentUserId ? 
-         <ProfilePage items={items} gundams={gundams} currentUserId={currentUserId}/>
+        //  <ProfilePage items={items} gundams={gundams} currentUserId={currentUserId}/>
+         <Shop items={items} currentUserId={currentUserId} currentUser={currentUser}/>
          : 
         <LoginSignup setCurrentUser={setCurrentUser} users={users} />
       }
