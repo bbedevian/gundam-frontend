@@ -16,5 +16,6 @@
 
             
 Next Steps 
-- we need profile page component 
-- need user gundams component 
+- store is gonna take all state of items 
+- onclick of buy POST item Inventories
+

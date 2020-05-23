@@ -32,7 +32,7 @@ class LoginSignup extends Component {
        if (user) {
         this.props.setCurrentUser(user.id)
            //render profile 
-           alert("Welcome back!")
+        //    alert("Welcome back!")
        } else {
             alert("Seems like we cant find you, try creating an account")
             this.setState({
