@@ -14,6 +14,9 @@ class App extends React.Component {
     gundams: [],
     items: [],
     currentUserId: null,
+    userGundams: [],
+    userItems: [],
+    equipped: []
   }
 
 
@@ -35,18 +38,37 @@ class App extends React.Component {
     this.setState({currentUserId: user})
   }
 
+  getUserStuff = () => {
+    fetch('http://localhost:3000/user_gundams')
+    .then(resp => resp.json())
+    .then(gundams => this.setState({ userGundams: 
+        gundams.map(userGundam => userGundam.user_id === this.state.currentUserId ? 
+            this.state.gundams.find(gundam => gundam.id === userGundam.gundam_id)
+                : 
+                null), equipped: gundams.filter(userGundam => userGundam.user_id === this.state.currentUserId)}))   
+
+    fetch('http://localhost:3000/inventories')
+    .then(resp => resp.json())
+    .then(items => this.setState({ userItems: 
+        items.map(userItem => userItem.user_id === this.state.currentUserId ? 
+            this.state.items.find(item => item.id === userItem.item_id)
+                : 
+                null)}))   
+  }
+
   render() {
-    // console.log('App State :>> ', this.state);
-    const {setCurrentUser} = this
-    const {users, currentUserId, gundams, items} = this.state
+    console.clear()
+    console.log('App State :>> ', this.state);
+    const {setCurrentUser, getUserStuff} = this
+    const {users, currentUserId, userGundams, userItems, items, equipped} = this.state
     const currentUser = users.find(user => user.id === currentUserId)
     return (
       <div>
         <Nav currentUserId={currentUserId} />
         { currentUserId ? 
-        //  <ProfilePage items={items} gundams={gundams} currentUserId={currentUserId}/>
-         <Shop items={items} currentUserId={currentUserId} currentUser={currentUser}/>
-         : 
+         <ProfilePage userItems={userItems} userGundams={userGundams} items={items} getUserStuff={getUserStuff} equipped={equipped} />
+        //  <Shop items={items} currentUserId={currentUserId} currentUser={currentUser}/>
+         :
         <LoginSignup setCurrentUser={setCurrentUser} users={users} />
       }
 

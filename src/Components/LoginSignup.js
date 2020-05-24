@@ -58,8 +58,6 @@ class LoginSignup extends Component {
     }
 
     render() {
-        // console.log('Login state :>> ', this.state);
-        // console.log('Login props :>> ', this.props);
         let { isNewUser, username } = this.state
         return (
              <div>
