@@ -5,13 +5,8 @@ import Item from './Item'
 class ProfilePage extends Component {
 
 
-    state = {
-        userGundams: [],
-        userItems: [],
-        equipped: []
-    }
-
     componentDidMount () {
+
         this.props.getUserStuff()  
     }
 

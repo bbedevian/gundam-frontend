@@ -30,7 +30,7 @@ class LoginSignup extends Component {
         e.preventDefault()
        let user = this.props.users.find(user => user.name.toLowerCase() === this.state.username.toLowerCase())
        if (user) {
-        this.props.setCurrentUser(user.id)
+        this.props.setCurrentUser(user)
            //render profile 
         //    alert("Welcome back!")
        } else {

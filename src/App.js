@@ -13,10 +13,11 @@ class App extends React.Component {
     users: [],
     gundams: [],
     items: [],
-    currentUserId: null,
+    currentUser: null,
     userGundams: [],
     userItems: [],
-    equipped: []
+    equipped: [],
+    inventories: []
   }
 
 
@@ -35,41 +36,48 @@ class App extends React.Component {
   }
 
   setCurrentUser = (user) => {
-    this.setState({currentUserId: user})
+    this.setState({currentUser: user})
   }
+
+
 
   getUserStuff = () => {
     fetch('http://localhost:3000/user_gundams')
     .then(resp => resp.json())
-    .then(gundams => this.setState({ userGundams: 
-        gundams.map(userGundam => userGundam.user_id === this.state.currentUserId ? 
-            this.state.gundams.find(gundam => gundam.id === userGundam.gundam_id)
-                : 
-                null), equipped: gundams.filter(userGundam => userGundam.user_id === this.state.currentUserId)}))   
+    .then(gundams =>
+    this.setState({ 
+      equipped: gundams.filter(userGundam => userGundam.user_id === this.state.currentUser.id),
+      userGundams: gundams.filter(userGundam => userGundam.user_id === this.state.currentUser.id).map(uGundam => this.state.gundams.find(gundam => gundam.id=== uGundam.gundam_id))}))
+
 
     fetch('http://localhost:3000/inventories')
     .then(resp => resp.json())
-    .then(items => this.setState({ userItems: 
-        items.map(userItem => userItem.user_id === this.state.currentUserId ? 
-            this.state.items.find(item => item.id === userItem.item_id)
-                : 
-                null)}))   
+    .then(items => 
+      this.setState({
+        inventories: items.filter(userItem => userItem.user_id === this.state.currentUser.id),
+        userItems: items.filter(userItem => userItem.user_id === this.state.currentUser.id).map(uItem => this.state.items.find(item => item.id=== uItem.item_id))
+      }))   
+   
   }
 
   render() {
-    console.clear()
+    // console.clear()
     console.log('App State :>> ', this.state);
     const {setCurrentUser, getUserStuff} = this
-    const {users, currentUserId, userGundams, userItems, items, equipped} = this.state
-    const currentUser = users.find(user => user.id === currentUserId)
+    const {users, currentUser, userGundams, userItems, items, equipped, inventories} = this.state
     return (
       <div>
-        <Nav currentUserId={currentUserId} />
-        { currentUserId ? 
-         <ProfilePage userItems={userItems} userGundams={userGundams} items={items} getUserStuff={getUserStuff} equipped={equipped} />
-        //  <Shop items={items} currentUserId={currentUserId} currentUser={currentUser}/>
+        { currentUser ? 
+        <>
+        <Nav currentUserId={currentUser.id} />
+         {/* <ProfilePage userItems={userItems} userGundams={userGundams} items={items} getUserStuff={getUserStuff} equipped={equipped} /> */}
+         <Shop items={items} inventories={inventories}setCurrentUser={setCurrentUser} currentUserId={currentUser.id} getUserStuff={getUserStuff} currentUser={currentUser} userItems={userItems}/>
+         </>
          :
+         <>
+         <Nav/>
         <LoginSignup setCurrentUser={setCurrentUser} users={users} />
+        </>
       }
 
         {/* ternary based on currentuserId cant be null to show below, else show <login/signup/> */}
