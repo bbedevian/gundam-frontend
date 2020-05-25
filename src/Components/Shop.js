@@ -5,9 +5,15 @@ import Item from './Item'
 
 class Shop extends Component {
 
+    state = {
+        userItems: this.props.userItems
+    }
+
     componentDidMount () {
         this.props.getUserStuff()  
     }
+
+    
 
     buyItem = (item) => {
         if (this.props.currentUser.balance > item.price) {
@@ -23,7 +29,8 @@ class Shop extends Component {
             body: JSON.stringify(newInventories)
             })
             .then(response => response.json())
-            .then(json => console.log('item added to your inventory', json))
+            .then(json => this.props.buyItem(json),
+                console.log('item added to your inventory'))
 
         fetch(`http://localhost:3000/users/${this.props.currentUserId}`, {
             method: 'PATCH',
@@ -34,23 +41,22 @@ class Shop extends Component {
             body: JSON.stringify({balance: newBalance})
             })
             .then(response => response.json())
-            .then(json => console.log('updated your balance', json))    
+            .then(json => console.log('updated your balance', json))
+            .then(this.props.decreaseBalance(newBalance))
+            .then(this.props.getUserStuff())
         } else {alert("You cant afford this item. Win some more battles and come back!")}
 
     }
     sellItem = (item) => {
         let newBalance =  this.props.currentUser.balance + (item.price * .5)
-        let itemForSale = this.props.userItems.find(userItem => userItem.id === item.id)
+        let itemForSale = this.props.inventories.find(userItem => userItem.item_id === item.id)
         console.log('item :>> ', item);
-        // fetch(`http://localhost:3000/inventories${itemForSale.id}`, {
-        //     method: 'DELETE',
-        //     headers: {
-        //         'accept': 'application/json',
-        //         'content-type': 'application/json'
-        //     }})
-
-        //     .then(response => response.json())
-        //     .then(json => console.log('item added to your inventory', json))
+        fetch(`http://localhost:3000/inventories/${itemForSale.id}`, {
+            method: 'DELETE',
+            headers: {
+                'accept': 'application/json',
+                'content-type': 'application/json'
+            }})
 
         fetch(`http://localhost:3000/users/${this.props.currentUserId}`, {
             method: 'PATCH',
@@ -63,13 +69,17 @@ class Shop extends Component {
             .then(response => response.json())
             .then(user => 
                 this.props.setCurrentUser(user),
-                console.log('updated your balance'))    
+                console.log('updated your balance')
+                )
+                .then(this.props.getUserStuff())
+
 
     }
 
+
     render() {
-        console.log('shop props :>> ', this.props);
-        console.log('user :>> ', this.props.currentUser);
+        // console.log('shop props :>> ', this.props);
+        // console.log('user :>> ', this.props.currentUser);
         const {items, userItems} = this.props
         const {buyItem, sellItem} = this
         return (

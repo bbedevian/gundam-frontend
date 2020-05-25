@@ -33,13 +33,36 @@ class App extends React.Component {
       fetch('http://localhost:3000/items')
       .then(resp => resp.json())
       .then(items => this.setState({ items }))
+
   }
+
+  // componentDidUpdate(prevState) {
+  //   if (this.state.currentUser && this.state.currentUser !== prevState.currentUser)
+  //   this.getUserStuff()
+  // }
 
   setCurrentUser = (user) => {
     this.setState({currentUser: user})
   }
 
+  sellItem = (item) => {
+    this.setState({
+      inventories: this.state.inventories.filter(userItem => userItem.item_id !== item.id)
+    })
+  }
 
+  buyItem = (item) => {
+    this.setState({
+      inventories: [...this.state.inventories, item],
+    })
+  }
+
+  decreaseBalance = (newBalance) => {
+    this.setState(prevState => ({
+      ...prevState, currentUser: {
+        ...prevState.currentUser,
+           balance: newBalance}}))
+  }
 
   getUserStuff = () => {
     fetch('http://localhost:3000/user_gundams')
@@ -63,7 +86,7 @@ class App extends React.Component {
   render() {
     // console.clear()
     console.log('App State :>> ', this.state);
-    const {setCurrentUser, getUserStuff} = this
+    const {setCurrentUser, getUserStuff, sellItem, buyItem, decreaseBalance} = this
     const {users, currentUser, userGundams, userItems, items, equipped, inventories} = this.state
     return (
       <div>
@@ -71,7 +94,11 @@ class App extends React.Component {
         <>
         <Nav currentUserId={currentUser.id} />
          {/* <ProfilePage userItems={userItems} userGundams={userGundams} items={items} getUserStuff={getUserStuff} equipped={equipped} /> */}
-         <Shop items={items} inventories={inventories}setCurrentUser={setCurrentUser} currentUserId={currentUser.id} getUserStuff={getUserStuff} currentUser={currentUser} userItems={userItems}/>
+         <Shop items={items} inventories={inventories}
+         setCurrentUser={setCurrentUser} currentUserId={currentUser.id} 
+         getUserStuff={getUserStuff} currentUser={currentUser} 
+         sellItem={sellItem} userItems={userItems}
+         buyItem={buyItem} decreaseBalance={decreaseBalance}/>
          </>
          :
          <>

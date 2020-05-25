@@ -52,7 +52,7 @@ class LoginSignup extends Component {
             body: JSON.stringify(newUser)
             })
             .then(response => response.json())
-            .then(user =>  this.props.setCurrentUser(user.id))
+            .then(user =>  this.props.setCurrentUser(user))
             //then render profile page (maybe user table should have boolean brand new 
             // which if true would instead send them to shop page with instructions
     }
