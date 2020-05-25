@@ -5,6 +5,7 @@ import LoginSignup from './components/LoginSignup';
 import Nav from './components/Nav';
 import ProfilePage from './components/ProfilePage';
 import Shop from './components/Shop';
+import BattleField from './components/BattleField';
 
 
 class App extends React.Component {
@@ -93,16 +94,16 @@ class App extends React.Component {
         { currentUser ? 
         <>
         <Nav currentUserId={currentUser.id} />
-
-         <ProfilePage key="Profile" userItems={userItems} userGundams={userGundams} items={items} getUserStuff={getUserStuff} equipped={equipped} />
+          <BattleField userGundams={userGundams} getUserStuff={getUserStuff}/>
+         {/* <ProfilePage key="Profile" userItems={userItems} userGundams={userGundams} items={items} getUserStuff={getUserStuff} equipped={equipped} /> */}
          {/* <Shop items={items} inventories={inventories}setCurrentUser={setCurrentUser} currentUserId={currentUser.id} getUserStuff={getUserStuff} currentUser={currentUser} userItems={userItems}/> */}
 
          {/* <ProfilePage userItems={userItems} userGundams={userGundams} items={items} getUserStuff={getUserStuff} equipped={equipped} /> */}
-         <Shop items={items} inventories={inventories}
+         {/* <Shop items={items} inventories={inventories}
          setCurrentUser={setCurrentUser} currentUserId={currentUser.id} 
          getUserStuff={getUserStuff} currentUser={currentUser} 
          sellItem={sellItem} userItems={userItems}
-         buyItem={buyItem} decreaseBalance={decreaseBalance}/>
+         buyItem={buyItem} decreaseBalance={decreaseBalance}/> */}
 
          </>
          :
