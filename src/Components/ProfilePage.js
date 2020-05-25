@@ -14,7 +14,7 @@ class ProfilePage extends Component {
             headers: {accept: "application/json",
             "Content-type": "application/json"},
             body: JSON.stringify({slot1: itemId})
-        }).then(this.props.getUserStuff())
+        }).then(console.log("added to slot 1"))
     }
 
     // addItemToSlot2 = (id, itemId) => {
