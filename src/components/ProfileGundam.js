@@ -17,7 +17,7 @@ const ProfileGundam = (props) => {
 
   let getHpBonus = (id) => {
     let item = findItem(id);
-    if (item !== undefined && null) {
+    if (item) {
       return item.hp_bonus;
     } else {
       return null;
@@ -26,8 +26,8 @@ const ProfileGundam = (props) => {
 
   let getAttBonus = (id) => {
     let item = findItem(id);
-    if (item !== undefined && null) {
-      return item.attack_bonus;
+    if (item) {
+        return item.attack_bonus;
     } else {
       return null;
     }
@@ -44,7 +44,7 @@ const ProfileGundam = (props) => {
   };
 
   let totalAttBonus = () => {
-    const { slot1, slot2, slot3, slot4 } = itemSlots[0];
+      const { slot1, slot2, slot3, slot4 } = itemSlots[0];
     return (
       getAttBonus(slot1) +
       getAttBonus(slot2) +
@@ -85,12 +85,12 @@ const ProfileGundam = (props) => {
       <h3>{rarity}</h3>
       <p>{description}</p>
       <div className="item-slot">
-        Slot 1:{" "}
-        {itemSlots[0].slot1 === null ? "Empty" : findItem(itemSlots[0].slot1)}
+        Slot 1:
+        {itemSlots[0].slot1 === null ? "Empty" : findItem(itemSlots[0].slot1).name}
       </div>
       {selectDropdown()}
       <button onClick={()=> props.addItemToSlot1(matchGundam(props.id)[0].id, item1)}>Add to slot</button>
-      <div className="item-slot">
+      {/* <div className="item-slot">
         Slot 2:{" "}
         {itemSlots[0].slot2 === null ? "Empty" : findItem(itemSlots[0].slot2)}
       </div>
@@ -107,7 +107,7 @@ const ProfileGundam = (props) => {
         {itemSlots[0].slot4 === null ? "Empty" : findItem(itemSlots[0].slot4)}
       </div>
       {selectDropdown()}
-      <button>Add to slot</button>
+      <button>Add to slot</button> */}
     </div>
   );
 };
