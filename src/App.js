@@ -1,14 +1,7 @@
 import React from 'react';
-import './App.css';
-
+import './App.css'
 import { Route, Switch  } from 'react-router-dom';
-// import {LoginSignup, Nav, ProfilePage, Shop, BattleField} from './components';
-import LoginSignup from './Components/LoginSignup';
-import Nav from './Components/Nav';
-import ProfilePage from './Components/ProfilePage';
-import Shop from './Components/Shop';
-import BattleField from './Components/BattleField';
-
+import {LoginSignup, Nav, ProfilePage, Shop, BattleField} from './components';
 
 
 class App extends React.Component {
@@ -39,11 +32,6 @@ class App extends React.Component {
       .then(items => this.setState({ items }))
 
   }
-
-  // componentDidUpdate(prevState) {
-  //   if (this.state.currentUser && this.state.currentUser !== prevState.currentUser)
-  //   this.getUserStuff()
-  // }
 
   setCurrentUser = (user) => {
     this.setState({currentUser: user})
@@ -94,40 +82,20 @@ class App extends React.Component {
     const {gundams, users, currentUser, userGundams, userItems, items, equipped, inventories} = this.state
     return (
       <div>
-        { currentUser ? 
         <>
+        <Nav />
         {/* <Nav currentUserId={currentUser.id} /> */}
-        {/* <Switch> 
-        <Route path="/profile" component={ProfilePage}/> 
-        <Route path="/shop" component={Shop}/>  */}
-       
-        {/* </Switch> */}
-          <BattleField gundams={gundams} userGundams={userGundams} getUserStuff={getUserStuff}/>
-
-        <Nav currentUserId={currentUser.id} />
-          <BattleField equipped={equipped} items={items} userGundams={userGundams} getUserStuff={getUserStuff}/>
-         {/* <ProfilePage key="Profile" userItems={userItems} userGundams={userGundams} items={items} getUserStuff={getUserStuff} equipped={equipped} /> */}
-         {/* <Shop items={items} inventories={inventories}setCurrentUser={setCurrentUser} currentUserId={currentUser.id} getUserStuff={getUserStuff} currentUser={currentUser} userItems={userItems}/> */}
-
-         {/* <ProfilePage userItems={userItems} userGundams={userGundams} items={items} getUserStuff={getUserStuff} equipped={equipped} /> */}
-         {/* <Shop items={items} inventories={inventories}
+        <Switch> 
+        <Route path="/profile" render={(props) => <ProfilePage {...props} userItems={userItems} userGundams={userGundams} items={items} getUserStuff={getUserStuff} equipped={equipped}/>}/>
+        <Route path="/shop" render={(props) => <Shop {...props} items={items} inventories={inventories}
          setCurrentUser={setCurrentUser} currentUserId={currentUser.id} 
          getUserStuff={getUserStuff} currentUser={currentUser} 
          sellItem={sellItem} userItems={userItems}
-         buyItem={buyItem} decreaseBalance={decreaseBalance}/> */}
-
-         </>
-         :
-         <>
-          {/* <Route path="/login" component={LoginSignup}/> */}
-         {/* <Nav/> */}
-        <LoginSignup setCurrentUser={setCurrentUser} users={users} />
+         buyItem={buyItem} decreaseBalance={decreaseBalance}/>} /> 
+        <Route path="/battlefield" render={(props) => <BattleField {...props} equipped={equipped} items={items} userGundams={userGundams} gundams={gundams} getUserStuff={getUserStuff}/>}/>
+        <Route path="/" render={(props) => <LoginSignup {...props} setCurrentUser={setCurrentUser} users={users} />}/>
+        </Switch>
         </>
-      }
-
-    
-        {/* <NavBar/> */}
-      
       </div>
     );
   }

@@ -31,6 +31,7 @@ class LoginSignup extends Component {
        let user = this.props.users.find(user => user.name.toLowerCase() === this.state.username.toLowerCase())
        if (user) {
         this.props.setCurrentUser(user)
+        this.props.history.push('/profile')
            //render profile 
         //    alert("Welcome back!")
        } else {
