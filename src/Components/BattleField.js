@@ -4,11 +4,9 @@ import BattleFieldGundam from "./BattleFieldGundam";
 import EnemyGundam from "./EnemyGundam";
 
 class BattleField extends Component {
-  componentDidMount() {
-    this.props.getUserStuff();
-  }
-
-  state = {
+  
+   state = {
+     opponents: [],
     selectedGundam: null,
     opponentGundam: null,
     userHealth: null,
@@ -16,7 +14,21 @@ class BattleField extends Component {
     opponentHealth: null,
     myTurn: true,
   };
+ 
+  componentDidMount () {
+        this.props.getUserStuff()  
+        this.getOpponents()
+    }
 
+
+    getOpponents = () => {
+        fetch('http://localhost:3000/opponents')
+        .then(resp => resp.json())
+        .then(opponents => 
+            this.setState({ opponents: opponents.map(opponent => this.props.gundams.find(gundam => gundam.id === parseInt(opponent.wave))) }))
+    } 
+
+  
   matchGundam = (id) => {
     return this.props.equipped.filter((equip) => equip.gundam_id === id);
   };
@@ -31,8 +43,10 @@ class BattleField extends Component {
       return item.hp_bonus;
     } else {
       return null;
+
     }
   };
+
 
   getAttBonus = (id) => {
     let item = this.findItem(id);
@@ -40,8 +54,19 @@ class BattleField extends Component {
       return item.attack_bonus;
     } else {
       return null;
+
     }
   };
+
+  attackOpponent = (attackValue) => {
+        this.setState({ myTurn: !this.state.myTurn,
+            opponentHealth: this.state.opponentHealth - attackValue})
+
+
+    getAttacked = (attackValue) => {
+        this.setState({  myTurn: !this.state.myTurn,
+            userHealth: this.state.userHealth - attackValue})
+    }
 
   totalHpBonus = (id) => {
     const itemSlots = this.matchGundam(id);
@@ -53,6 +78,7 @@ class BattleField extends Component {
       this.getHpBonus(slot4)
     );
   };
+
 
   totalAttBonus = (id) => {
     const itemSlots = this.matchGundam(id);
@@ -81,25 +107,14 @@ class BattleField extends Component {
     this.setState({
       selectedGundam: gundam,
       userHealth: gundam.hp + this.totalHpBonus(gundam.id),
-      userAtt: gundam.attack + this.totalAttBonus(gundam.id)
+      userAtt: gundam.attack + this.totalAttBonus(gundam.id),
+      opponentHealth: this.state.opponents[0].hp
     });
   };
 
-  setGundamHp = (gundam) => {
-      this.setState({
-          userHealth: gundam.hp + this.totalHpBonus()
-      })
-  }
-  attackOpponent = (attackValue) => {
-    this.setState({ opponentHealth: this.state.opponentHealth - attackValue });
-  };
-
-  getAttacked = (attackValue) => {
-    this.setState({ userHealth: this.state.userHealth - attackValue });
-  };
 
   render() {
-    const { myTurn, selectedGundam, userAtt, userHealth } = this.state;
+    const { myTurn, selectedGundam, userAtt, userHealth, opponents } = this.state;
     const { getAttacked, attackOpponent } = this;
     console.log("battlefield", this.state)
     return (
@@ -119,12 +134,13 @@ class BattleField extends Component {
             <EnemyGundam 
             key={selectedGundam.id}
             myTurn={myTurn} 
-            getAttacked={getAttacked} />
+            getAttacked={getAttacked} opponents={opponents}/>
           </>
         )}
       </div>
     );
   }
+
 }
 
 export default BattleField;

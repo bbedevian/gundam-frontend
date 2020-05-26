@@ -1,11 +1,14 @@
 import React from 'react';
 import './App.css';
 
+import { Route, Switch  } from 'react-router-dom';
+// import {LoginSignup, Nav, ProfilePage, Shop, BattleField} from './components';
 import LoginSignup from './Components/LoginSignup';
 import Nav from './Components/Nav';
 import ProfilePage from './Components/ProfilePage';
 import Shop from './Components/Shop';
 import BattleField from './Components/BattleField';
+
 
 
 class App extends React.Component {
@@ -88,11 +91,19 @@ class App extends React.Component {
     // console.clear() 
     console.log('App State :>> ', this.state);
     const {setCurrentUser, getUserStuff, sellItem, buyItem, decreaseBalance} = this
-    const {users, currentUser, userGundams, userItems, items, equipped, inventories} = this.state
+    const {gundams, users, currentUser, userGundams, userItems, items, equipped, inventories} = this.state
     return (
       <div>
         { currentUser ? 
         <>
+        {/* <Nav currentUserId={currentUser.id} /> */}
+        {/* <Switch> 
+        <Route path="/profile" component={ProfilePage}/> 
+        <Route path="/shop" component={Shop}/>  */}
+       
+        {/* </Switch> */}
+          <BattleField gundams={gundams} userGundams={userGundams} getUserStuff={getUserStuff}/>
+
         <Nav currentUserId={currentUser.id} />
           <BattleField equipped={equipped} items={items} userGundams={userGundams} getUserStuff={getUserStuff}/>
          {/* <ProfilePage key="Profile" userItems={userItems} userGundams={userGundams} items={items} getUserStuff={getUserStuff} equipped={equipped} /> */}
@@ -108,14 +119,15 @@ class App extends React.Component {
          </>
          :
          <>
-         <Nav/>
+          {/* <Route path="/login" component={LoginSignup}/> */}
+         {/* <Nav/> */}
         <LoginSignup setCurrentUser={setCurrentUser} users={users} />
         </>
       }
 
-        {/* ternary based on currentuserId cant be null to show below, else show <login/signup/> */}
-        {/* {<NavBar/>}
-        below is the switch based on whats clicked(starts on profile) */}
+    
+        {/* <NavBar/> */}
+      
       </div>
     );
   }
