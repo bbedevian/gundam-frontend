@@ -99,7 +99,7 @@ class BattleField extends Component {
   };
 
   render() {
-    const { myTurn, selectedGundam } = this.state;
+    const { myTurn, selectedGundam, userAtt, userHealth } = this.state;
     const { getAttacked, attackOpponent } = this;
     console.log("battlefield", this.state)
     return (
@@ -109,9 +109,11 @@ class BattleField extends Component {
         ) : (
           <>
             <BattleFieldGundam
-                selectedGundam={selectedGundam}
-              myTurn={myTurn}
-              attackOpponent={attackOpponent}
+            selectedGundam={selectedGundam}
+            myTurn={myTurn}
+            attackOpponent={attackOpponent}
+            userAtt={userAtt}
+            userHealth={userHealth}
             />
             <EnemyGundam myTurn={myTurn} getAttacked={getAttacked} />
           </>
