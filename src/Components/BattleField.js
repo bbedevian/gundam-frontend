@@ -81,7 +81,7 @@ class BattleField extends Component {
     this.setState({
       selectedGundam: gundam,
       userHealth: gundam.hp + this.totalHpBonus(gundam.id),
-      userAtt: gundam.attack + this.totalHpBonus(gundam.id)
+      userAtt: gundam.attack + this.totalAttBonus(gundam.id)
     });
   };
 
@@ -108,14 +108,18 @@ class BattleField extends Component {
           this.props.userGundams.map((gundam) => this.showGundam(gundam))
         ) : (
           <>
-            <BattleFieldGundam
+            <BattleFieldGundam 
+            key={selectedGundam.id}
             selectedGundam={selectedGundam}
             myTurn={myTurn}
             attackOpponent={attackOpponent}
             userAtt={userAtt}
             userHealth={userHealth}
             />
-            <EnemyGundam myTurn={myTurn} getAttacked={getAttacked} />
+            <EnemyGundam 
+            key={selectedGundam.id}
+            myTurn={myTurn} 
+            getAttacked={getAttacked} />
           </>
         )}
       </div>
