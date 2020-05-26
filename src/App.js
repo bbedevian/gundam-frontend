@@ -75,10 +75,35 @@ class App extends React.Component {
    
   }
 
+  toggleItemInUse = (userId, itemId) => {
+    let patchInventory = this.state.inventories.find(inventory => inventory.user_id === userId && inventory.item_id === parseInt(itemId))
+    // console.log(patchInventory)
+      fetch('http://localhost:3000/inventories/'+patchInventory.id,
+    { method: "PATCH",
+      headers: {accept: "application/json",
+      "Content-type": "application/json"},
+      body: JSON.stringify({in_use: true})})
+      .then(resp => resp.json())
+      .then(newInv => this.setState({inventories: this.state.inventories.map(inventory => inventory.id === patchInventory.id ? newInv : inventory)}))
+    // this.setState({inventories: this.state.inventories.map(inventory => inventory.user_id === userId && inventory.item_id === itemId ? !inventory.in_use : inventory)})
+  }
+
+  unequipItem = (userId, itemId) => {
+    let patchInventory = this.state.inventories.find(inventory => inventory.user_id === userId && inventory.item_id === parseInt(itemId))
+    // console.log(patchInventory)
+      fetch('http://localhost:3000/inventories/'+patchInventory.id,
+    { method: "PATCH",
+      headers: {accept: "application/json",
+      "Content-type": "application/json"},
+      body: JSON.stringify({in_use: false})})
+      .then(resp => resp.json())
+      .then(newInv => this.setState({inventories: this.state.inventories.map(inventory => inventory.id === patchInventory.id ? newInv : inventory)}))
+    }
+
   render() {
     // console.clear() 
     console.log('App State :>> ', this.state);
-    const {setCurrentUser, getUserStuff, sellItem, buyItem, decreaseBalance} = this
+    const {setCurrentUser, getUserStuff, sellItem, buyItem, decreaseBalance, toggleItemInUse, unequipItem} = this
     const {gundams, users, currentUser, userGundams, userItems, items, equipped, inventories} = this.state
     return (
       <div>
@@ -86,7 +111,11 @@ class App extends React.Component {
         <Nav />
         {/* <Nav currentUserId={currentUser.id} /> */}
         <Switch> 
-        <Route path="/profile" render={(props) => <ProfilePage {...props} userItems={userItems} userGundams={userGundams} items={items} getUserStuff={getUserStuff} equipped={equipped}/>}/>
+        <Route path="/profile" render={(props) => <ProfilePage {...props} 
+        currentUser={currentUser} toggleItemInUse={toggleItemInUse} 
+        userItems={userItems} userGundams={userGundams} items={items} 
+        getUserStuff={getUserStuff} equipped={equipped} unequipItem={unequipItem}
+        inventories={inventories}/>}/>
         <Route path="/shop" render={(props) => <Shop {...props} items={items} inventories={inventories}
          setCurrentUser={setCurrentUser} currentUserId={currentUser.id} 
          getUserStuff={getUserStuff} currentUser={currentUser} 

@@ -1,9 +1,24 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 
 const ProfileGundam = (props) => {
-  const {img_url,name,hp,rarity,description,attack,equipped,items,userItems} = props;
+  const {
+    img_url,
+    name,
+    hp,
+    rarity,
+    description,
+    attack,
+    equipped,
+    items,
+    userItems,
+    inventories,
+    unequipItem,
+  } = props;
 
-  const [item1, setItem1] = useState(null)
+  const [item1, setItem1] = useState(null);
+  const [item2, setItem2] = useState(null);
+  const [item3, setItem3] = useState(null);
+  const [item4, setItem4] = useState(null);
 
   let matchGundam = (id) => {
     return equipped.filter((equip) => equip.gundam_id === id);
@@ -27,7 +42,7 @@ const ProfileGundam = (props) => {
   let getAttBonus = (id) => {
     let item = findItem(id);
     if (item) {
-        return item.attack_bonus;
+      return item.attack_bonus;
     } else {
       return null;
     }
@@ -44,7 +59,7 @@ const ProfileGundam = (props) => {
   };
 
   let totalAttBonus = () => {
-      const { slot1, slot2, slot3, slot4 } = itemSlots[0];
+    const { slot1, slot2, slot3, slot4 } = itemSlots[0];
     return (
       getAttBonus(slot1) +
       getAttBonus(slot2) +
@@ -54,20 +69,74 @@ const ProfileGundam = (props) => {
   };
 
   let optionVal = (val) => {
-    return (
-        <option value={val.id}>{val.name}</option>
-    );
+    return <option value={val.id}>{val.name}</option>;
   };
 
   let slot1Handler = (event) => {
-      setItem1(event.target.value)
-  }
+    setItem1(event.target.value);
+  };
 
-  let selectDropdown = () => {
+  let slot2Handler = (event) => {
+    setItem2(event.target.value);
+  };
+
+  let slot3Handler = (event) => {
+    setItem3(event.target.value);
+  };
+
+  let slot4Handler = (event) => {
+    setItem4(event.target.value);
+  };
+
+  let selectDropdown1 = () => {
+    let itemsNotInUse = inventories.filter(
+      (inventory) => inventory.in_use !== true
+    );
+    let itemIds = itemsNotInUse.map((inventory) => inventory.item_id);
     return (
-      <select onChange={(event)=> slot1Handler(event)} name="slots">
+      <select onChange={(event) => slot1Handler(event)} name="slots">
         <option>Select an item</option>
-        {userItems.map((item) => optionVal(item))}
+        {itemIds.map((id) => optionVal(findItem(id)))}
+        {/* {userItems.map((item) => itemsIds.includes(item.id) ?  null : optionVal(item))} */}
+      </select>
+    );
+  };
+  let selectDropdown2 = () => {
+    let itemsNotInUse = inventories.filter(
+      (inventory) => inventory.in_use !== true
+    );
+    let itemIds = itemsNotInUse.map((inventory) => inventory.item_id);
+    return (
+      <select onChange={(event) => slot2Handler(event)} name="slots">
+        <option>Select an item</option>
+        {itemIds.map((id) => optionVal(findItem(id)))}
+        {/* {userItems.map((item) => itemsIds.includes(item.id) ?  null : optionVal(item))} */}
+      </select>
+    );
+  };
+  let selectDropdown3 = () => {
+    let itemsNotInUse = inventories.filter(
+      (inventory) => inventory.in_use !== true
+    );
+    let itemIds = itemsNotInUse.map((inventory) => inventory.item_id);
+    return (
+      <select onChange={(event) => slot3Handler(event)} name="slots">
+        <option>Select an item</option>
+        {itemIds.map((id) => optionVal(findItem(id)))}
+        {/* {userItems.map((item) => itemsIds.includes(item.id) ?  null : optionVal(item))} */}
+      </select>
+    );
+  };
+  let selectDropdown4 = () => {
+    let itemsNotInUse = inventories.filter(
+      (inventory) => inventory.in_use !== true
+    );
+    let itemIds = itemsNotInUse.map((inventory) => inventory.item_id);
+    return (
+      <select onChange={(event) => slot4Handler(event)} name="slots">
+        <option>Select an item</option>
+        {itemIds.map((id) => optionVal(findItem(id)))}
+        {/* {userItems.map((item) => itemsIds.includes(item.id) ?  null : optionVal(item))} */}
       </select>
     );
   };
@@ -85,29 +154,129 @@ const ProfileGundam = (props) => {
       <h3>{rarity}</h3>
       <p>{description}</p>
       <div className="item-slot">
-        Slot 1:
-        {itemSlots[0].slot1 === null ? "Empty" : findItem(itemSlots[0].slot1).name}
+        {itemSlots[0].slot1 === null ? (
+          <>
+            <h3>Slot 1 : Empty</h3>
+            {selectDropdown1()}
+            <button
+              onClick={() => {
+                props.addItemToSlot1(matchGundam(props.id)[0].id, item1);
+                props.toggleItemInUse(props.currentUser.id, item1);
+              }}
+            >
+              Add to slot 1
+            </button>
+          </>
+        ) : (
+          <>
+            <h3>Slot 1: {findItem(itemSlots[0].slot1).name}</h3>
+            <button
+              onClick={() => {
+                unequipItem(
+                  props.currentUser.id,
+                  findItem(itemSlots[0].slot1).id
+                );
+                props.removeItemFromSlot1(matchGundam(props.id)[0].id);
+              }}
+            >
+              Unequip Item
+            </button>
+          </>
+        )}
       </div>
-      {selectDropdown()}
-      <button onClick={()=> props.addItemToSlot1(matchGundam(props.id)[0].id, item1)}>Add to slot</button>
-      {/* <div className="item-slot">
-        Slot 2:{" "}
-        {itemSlots[0].slot2 === null ? "Empty" : findItem(itemSlots[0].slot2)}
-      </div>
-      {selectDropdown()}
-      <button>Add to slot</button>
       <div className="item-slot">
-        Slot 3:{" "}
-        {itemSlots[0].slot3 === null ? "Empty" : findItem(itemSlots[0].slot3)}
+        {itemSlots[0].slot2 === null ? (
+          <>
+            <h3>Slot 2 : Empty</h3>
+            {selectDropdown2()}
+            <button
+              onClick={() => {
+                props.addItemToSlot2(matchGundam(props.id)[0].id, item2);
+                props.toggleItemInUse(props.currentUser.id, item2);
+              }}
+            >
+              Add to slot 2
+            </button>
+          </>
+        ) : (
+          <>
+            <h3>Slot 2: {findItem(itemSlots[0].slot2).name}</h3>
+            <button
+              onClick={() => {
+                unequipItem(
+                  props.currentUser.id,
+                  findItem(itemSlots[0].slot2).id
+                );
+                props.removeItemFromSlot2(matchGundam(props.id)[0].id);
+              }}
+            >
+              Unequip Item
+            </button>
+          </>
+        )}
       </div>
-      {selectDropdown()}
-      <button>Add to slot</button>
       <div className="item-slot">
-        Slot 4:{" "}
-        {itemSlots[0].slot4 === null ? "Empty" : findItem(itemSlots[0].slot4)}
+        {itemSlots[0].slot3 === null ? (
+          <>
+            <h3>Slot 3 : Empty</h3>
+            {selectDropdown3()}
+            <button
+              onClick={() => {
+                props.addItemToSlot3(matchGundam(props.id)[0].id, item3);
+                props.toggleItemInUse(props.currentUser.id, item3);
+              }}
+            >
+              Add to slot 3
+            </button>
+          </>
+        ) : (
+          <>
+            <h3>Slot 3: {findItem(itemSlots[0].slot3).name}</h3>
+            <button
+              onClick={() => {
+                unequipItem(
+                  props.currentUser.id,
+                  findItem(itemSlots[0].slot3).id
+                );
+                props.removeItemFromSlot3(matchGundam(props.id)[0].id);
+              }}
+            >
+              Unequip Item
+            </button>
+          </>
+        )}
       </div>
-      {selectDropdown()}
-      <button>Add to slot</button> */}
+      <div className="item-slot">
+        {itemSlots[0].slot4 === null ? (
+          <>
+            <h3>Slot 4 : Empty</h3>
+            {selectDropdown4()}
+            <button
+              onClick={() => {
+                props.addItemToSlot4(matchGundam(props.id)[0].id, item4);
+                props.toggleItemInUse(props.currentUser.id, item4);
+              }}
+            >
+              Add to slot 4
+            </button>
+          </>
+        ) : (
+          <>
+            <h3>Slot 4: {findItem(itemSlots[0].slot4).name}</h3>
+            <button
+              onClick={() => {
+                unequipItem(
+                  props.currentUser.id,
+                  findItem(itemSlots[0].slot4).id
+                );
+                props.removeItemFromSlot4(matchGundam(props.id)[0].id);
+              }}
+            >
+              Unequip Item
+            </button>
+          </>
+        )}
+      </div>
     </div>
   );
 };
