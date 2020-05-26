@@ -1,12 +1,14 @@
 import React from 'react';
 import './App.css';
+
 import { Route, Switch  } from 'react-router-dom';
-import LoginSignup from './components/LoginSignup';
-import Nav from './components/Nav';
-import ProfilePage from './components/ProfilePage';
-import Shop from './components/Shop';
-import BattleField from './components/BattleField';
 // import {LoginSignup, Nav, ProfilePage, Shop, BattleField} from './components';
+import LoginSignup from './Components/LoginSignup';
+import Nav from './Components/Nav';
+import ProfilePage from './Components/ProfilePage';
+import Shop from './Components/Shop';
+import BattleField from './Components/BattleField';
+
 
 
 class App extends React.Component {
@@ -101,6 +103,9 @@ class App extends React.Component {
        
         {/* </Switch> */}
           <BattleField gundams={gundams} userGundams={userGundams} getUserStuff={getUserStuff}/>
+
+        <Nav currentUserId={currentUser.id} />
+          <BattleField equipped={equipped} items={items} userGundams={userGundams} getUserStuff={getUserStuff}/>
          {/* <ProfilePage key="Profile" userItems={userItems} userGundams={userGundams} items={items} getUserStuff={getUserStuff} equipped={equipped} /> */}
          {/* <Shop items={items} inventories={inventories}setCurrentUser={setCurrentUser} currentUserId={currentUser.id} getUserStuff={getUserStuff} currentUser={currentUser} userItems={userItems}/> */}
 
