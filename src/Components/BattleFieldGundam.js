@@ -4,7 +4,7 @@ class BattleFieldGundam extends Component {
     render() {
         return (
             <div>
-                
+                <h1>{this.props.selectedGundam.name}</h1>
             </div>
         );
     }
