@@ -7,15 +7,24 @@ class BattleField extends Component {
 
     componentDidMount () {
         this.props.getUserStuff()  
+        this.getOpponents()
     }
 
     state = {
+        opponents: [],
         selectedGundam: null,
         opponentGundam: null,
         userHealth: null,
         opponentHealth: null,
-        myTurn: true
+        myTurn: false
     }
+
+    getOpponents = () => {
+        fetch('http://localhost:3000/opponents')
+        .then(resp => resp.json())
+        .then(opponents => 
+            this.setState({ opponents: opponents.map(opponent => this.props.gundams.find(gundam => gundam.id === parseInt(opponent.wave))) }))
+    } 
 
     showGundam = (gundam) => {
          return (   <> 
@@ -29,32 +38,38 @@ class BattleField extends Component {
     selectGundam = (gundam) => {
         this.setState({
             selectedGundam: gundam,
-            userHealth: gundam.totalhp })
+            userHealth: gundam.hp,
+            opponentHealth: this.state.opponents[0].hp
+        })
     }
 
     attackOpponent = (attackValue) => {
-        this.setState({ opponentHealth: this.state.opponentHealth - attackValue})
+        this.setState({ myTurn: !this.state.myTurn,
+            opponentHealth: this.state.opponentHealth - attackValue})
     }
 
     getAttacked = (attackValue) => {
-        this.setState({ userHealth: this.state.userHealth - attackValue})
+        this.setState({  myTurn: !this.state.myTurn,
+            userHealth: this.state.userHealth - attackValue})
     }
 
 
 
 
     render() {
-        const {myTurn} = this.state
+        console.log('BattleField State :>> ', this.state);
+        const {myTurn, opponents, userHealth} = this.state
         const {getAttacked, attackOpponent} = this
         return (
-            <div>
+            <div className="battlefield">
                 {this.state.selectedGundam === null ? 
                 this.props.userGundams.map(gundam => 
                 this.showGundam(gundam))
                 : 
                 <>
+                User Health: {userHealth}
                 <BattleFieldGundam myTurn={myTurn} attackOpponent={attackOpponent} />
-                <EnemyGundam myTurn={myTurn} getAttacked={getAttacked}/> 
+                <EnemyGundam myTurn={myTurn} getAttacked={getAttacked} opponents={opponents}/>
                 </>
      }
             </div>
