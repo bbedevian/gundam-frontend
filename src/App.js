@@ -38,14 +38,21 @@ class App extends React.Component {
   }
 
   sellItem = (item) => {
+    let newInventories = this.state.inventories.filter(userItem => userItem.id !== item.id)
+    let newUserItems = this.state.userItems
+    let index = newUserItems.findIndex(items => items.id === item.item_id)
+    newUserItems.splice(index, 1)
     this.setState({
-      inventories: this.state.inventories.filter(userItem => userItem.item_id !== item.id)
+      inventories: newInventories,
+      userItems: newUserItems
     })
   }
 
   buyItem = (item) => {
+    let newItem = this.state.items.find(items => items.id === item.item_id)
     this.setState({
       inventories: [...this.state.inventories, item],
+      userItems: [...this.state.userItems, newItem]
     })
   }
 
@@ -92,7 +99,7 @@ class App extends React.Component {
          getUserStuff={getUserStuff} currentUser={currentUser} 
          sellItem={sellItem} userItems={userItems}
          buyItem={buyItem} decreaseBalance={decreaseBalance}/>} /> 
-        <Route path="/battlefield" render={(props) => <BattleField {...props} equipped={equipped} items={items} userGundams={userGundams} gundams={gundams} getUserStuff={getUserStuff}/>}/>
+        <Route path="/battlefield" render={(props) => <BattleField {...props} currentUser={currentUser} equipped={equipped} items={items} userGundams={userGundams} gundams={gundams} getUserStuff={getUserStuff}/>}/>
         <Route path="/" render={(props) => <LoginSignup {...props} setCurrentUser={setCurrentUser} users={users} />}/>
         </Switch>
         </>
