@@ -14,21 +14,24 @@ const ProfileGundam = (props) => {
     inventories,
     unequipItem,
   } = props;
-
-  const [item1, setItem1] = useState(null);
-  const [item2, setItem2] = useState(null);
-  const [item3, setItem3] = useState(null);
-  const [item4, setItem4] = useState(null);
-
-  let matchGundam = (id) => {
-    return equipped.filter((equip) => equip.gundam_id === id);
-  };
-
-  let itemSlots = matchGundam(props.id);
-
+  
+  
+  
   let findItem = (id) => {
     return items.find((item) => item.id === id);
   };
+  
+  let matchGundam = (id) => {
+    console.log("equipped inside profile gundam", equipped)
+    return equipped.filter((equip) => equip.gundam_id === id);
+  };
+  let itemSlots = matchGundam(props.id);
+  
+  
+  const [item1, setItem1] = useState(itemSlots[0].slot1 !== null ? findItem(itemSlots[0].slot1).id : null);
+  const [item2, setItem2] = useState(itemSlots[0].slot2 !== null ? findItem(itemSlots[0].slot2).id : null);
+  const [item3, setItem3] = useState(itemSlots[0].slot3 !== null ? findItem(itemSlots[0].slot3).id : null);
+  const [item4, setItem4] = useState(itemSlots[0].slot4 !== null ? findItem(itemSlots[0].slot4).id : null);
 
   let getHpBonus = (id) => {
     let item = findItem(id);

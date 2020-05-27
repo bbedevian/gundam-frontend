@@ -14,7 +14,7 @@ class ProfilePage extends Component {
             headers: {accept: "application/json",
             "Content-type": "application/json"},
             body: JSON.stringify({slot1: itemId})
-        }).then(console.log("added to slot 1"))
+        }).then(this.props.addEquippedSlot1(id, itemId))
     }
 
     addItemToSlot2 = (id, itemId) => {
@@ -23,7 +23,7 @@ class ProfilePage extends Component {
             headers: {accept: "application/json",
             "Content-type": "application/json"},
             body: JSON.stringify({slot2: itemId})
-        }).then(console.log("added to slot 2"))
+        }).then(this.props.addEquippedSlot2(id, itemId))
     }
     addItemToSlot3 = (id, itemId) => {
         fetch(userGundamUrl+'/'+id, {
@@ -31,7 +31,7 @@ class ProfilePage extends Component {
             headers: {accept: "application/json",
             "Content-type": "application/json"},
             body: JSON.stringify({slot3: itemId})
-        }).then(console.log("added to slot 3"))
+        }).then(this.props.addEquippedSlot3(id, itemId))
     }
     addItemToSlot4 = (id, itemId) => {
         fetch(userGundamUrl+'/'+id, {
@@ -39,7 +39,7 @@ class ProfilePage extends Component {
             headers: {accept: "application/json",
             "Content-type": "application/json"},
             body: JSON.stringify({slot4: itemId})
-        }).then(console.log("added to slot 4"))
+        }).then(this.props.addEquippedSlot4(id, itemId))
     }
     removeItemFromSlot1 = (id) => {
         fetch(userGundamUrl+'/'+id, {
@@ -47,7 +47,7 @@ class ProfilePage extends Component {
             headers: {accept: "application/json",
             "Content-type": "application/json"},
             body: JSON.stringify({slot1: null})
-        }).then(console.log("added to slot 1"))
+        }).then(this.props.removeEquipped(id, "slot1"))
     }
 
     removeItemFromSlot2 = (id) => {
@@ -56,7 +56,7 @@ class ProfilePage extends Component {
             headers: {accept: "application/json",
             "Content-type": "application/json"},
             body: JSON.stringify({slot2: null})
-        }).then(console.log("added to slot 2"))
+        }).then(this.props.removeEquipped(id, "slot2"))
     }
     removeItemFromSlot3 = (id) => {
         fetch(userGundamUrl+'/'+id, {
@@ -64,7 +64,7 @@ class ProfilePage extends Component {
             headers: {accept: "application/json",
             "Content-type": "application/json"},
             body: JSON.stringify({slot3: null})
-        }).then(console.log("added to slot 3"))
+        }).then(this.props.removeEquipped(id, "slot3"))
     }
     removeItemFromSlot4 = (id) => {
         fetch(userGundamUrl+'/'+id, {
@@ -72,7 +72,7 @@ class ProfilePage extends Component {
             headers: {accept: "application/json",
             "Content-type": "application/json"},
             body: JSON.stringify({slot4: null})
-        }).then(console.log("added to slot 4"))
+        }).then(this.props.removeEquipped(id, "slot4"))
     }
     //PATCH to userGundams add item id to one of 4 slots, user determines which slot to put it in
 

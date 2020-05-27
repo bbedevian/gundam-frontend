@@ -33,6 +33,43 @@ class App extends React.Component {
 
   }
 
+  addEquippedSlot1 = (id, itemId) => {
+    console.log("App equipped", this.state.equipped)
+    let equipNew = this.state.equipped.find(equip => equip.id === id)
+    equipNew.slot1 = parseInt(itemId)
+    let newEquipped = this.state.equipped.map(equip => equip.id !== id ? equip : equipNew )
+    console.log("App New equipped", newEquipped)
+    this.setState({equipped: newEquipped})
+  }
+
+  addEquippedSlot2 = (id, itemId) => {
+    let equipNew = this.state.equipped.find(equip => equip.id === id)
+    equipNew.slot2 = parseInt(itemId)
+    let newEquipped = this.state.equipped.map(equip => equip.id !== id ? equip : equipNew )
+    this.setState({equipped: newEquipped})
+  }
+
+  addEquippedSlot3 = (id, itemId) => {
+    let equipNew = this.state.equipped.find(equip => equip.id === id)
+    equipNew.slot3 = parseInt(itemId)
+    let newEquipped = this.state.equipped.map(equip => equip.id !== id ? equip : equipNew )
+    this.setState({equipped: newEquipped})
+  }
+
+  addEquippedSlot4 = (id, itemId) => {
+    let equipNew = this.state.equipped.find(equip => equip.id === id)
+    equipNew.slot4 = parseInt(itemId)
+    let newEquipped = this.state.equipped.map(equip => equip.id !== id ? equip : equipNew )
+    this.setState({equipped: newEquipped})
+  }
+
+  removeEquipped = (id, slot) => {
+    let equipNew = this.state.equipped.find(equip => equip.id === id)
+    equipNew[slot] = null
+    let newEquipped = this.state.equipped.map(equip => equip.id !== id ? equip : equipNew )
+    this.setState({equipped: newEquipped})
+  }
+
   setCurrentUser = (user) => {
     this.setState({currentUser: user})
   }
@@ -103,7 +140,7 @@ class App extends React.Component {
   render() {
     // console.clear() 
     console.log('App State :>> ', this.state);
-    const {setCurrentUser, getUserStuff, sellItem, buyItem, decreaseBalance, toggleItemInUse, unequipItem} = this
+    const {setCurrentUser, getUserStuff, sellItem, buyItem, decreaseBalance, toggleItemInUse, unequipItem, removeEquipped, addEquippedSlot1,addEquippedSlot2,addEquippedSlot3,addEquippedSlot4} = this
     const {gundams, users, currentUser, userGundams, userItems, items, equipped, inventories} = this.state
     return (
       <div>
@@ -114,7 +151,9 @@ class App extends React.Component {
         <Route path="/profile" render={(props) => <ProfilePage {...props} 
         currentUser={currentUser} toggleItemInUse={toggleItemInUse} 
         userItems={userItems} userGundams={userGundams} items={items} 
-        getUserStuff={getUserStuff} equipped={equipped} unequipItem={unequipItem}
+        getUserStuff={getUserStuff} equipped={equipped} unequipItem={unequipItem} addEquippedSlot1={addEquippedSlot1}
+        addEquippedSlot2={addEquippedSlot2} addEquippedSlot3={addEquippedSlot3} addEquippedSlot4={addEquippedSlot4}
+        removeEquipped={removeEquipped}
         inventories={inventories}/>}/>
         <Route path="/shop" render={(props) => <Shop {...props} items={items} inventories={inventories}
          setCurrentUser={setCurrentUser} currentUserId={currentUser.id} 
