@@ -42,8 +42,22 @@ class LoginSignup extends Component {
            }   
     }
 
+    createUserGundam = (user) => {
+        fetch(`http://localhost:3000/user_gundams`, {
+                method: 'POST',
+                headers: {
+                    'accept': 'application/json',
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify({user_id: user.id, gundam_id: this.props.gundams.find(gundam => gundam.name === "Strike").id})
+                })
+                .then(response => response.json())
+                .then(json => this.props.setNewUserGundam(json))
+                this.props.history.push('/profile')
+    }
+
     createUser = (name) => {
-        let newUser = {name: name, balance: 50}
+        let newUser = {name: name}
         fetch(`http://localhost:3000/users`, {
             method: 'POST',
             headers: {
@@ -53,9 +67,12 @@ class LoginSignup extends Component {
             body: JSON.stringify(newUser)
             })
             .then(response => response.json())
-            .then(user =>  this.props.setCurrentUser(user))
-            //then render profile page (maybe user table should have boolean brand new 
-            // which if true would instead send them to shop page with instructions
+            .then(user =>   
+               ( this.props.setCurrentUser(user),
+                this.createUserGundam(user))
+                
+            )
+    
     }
 
     render() {

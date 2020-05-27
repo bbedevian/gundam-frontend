@@ -16,20 +16,17 @@
 
             
 Next Steps 
-- battlefield logic state of selected gundam, opponent gundam, state of each gundams health
-*background
+- items need attributes in store (hover to show?)
+- buy and sell gundams
+    - import and display user gundams 
+    - (make methods for delete, post, patch)
 
-    - select gundam for battle component 
-    if either gundam health state reached 0 you win or lose 
+- next level of opponents (wave  = user level)
+    - less than logic to update user level
+    - prize a multiple of level
+    - change battlefield to have a start battle button in addition to choose gundam, set currentbattle level (choosen by user)
 
-    - battlefield component (state for whos turn it is)
-        - battlefield gundam (like a profile gundam but diff format)
-            div for attack, one special attack in state true or false (can maybe recharge?)
-        - enemy gundam
-            logic attack (if attack state is "opponent" then attack)
-             - needs an interval before attacking
-             
-        
 
+  
 
 

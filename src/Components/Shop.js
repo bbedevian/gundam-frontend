@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Item from './Item'
+import StoreGundam from './StoreGundam';
 
 //maybe we can make items show based on user wins ie after 10 wins you can buy medium rare, 20 wins rare etc
 
@@ -81,8 +82,9 @@ class Shop extends Component {
     render() {
         // console.log('shop props :>> ', this.props);
         // console.log('user :>> ', this.props.currentUser);
-        const {items, userItems, currentUser} = this.props
+        const {items, userItems, currentUser, gundams} = this.props
         const {buyItem, sellItem} = this
+        let gfs = gundams.filter(gundam => gundam.price ? gundam : null)
         return (
             <div>
                 <center>
@@ -103,6 +105,11 @@ class Shop extends Component {
                     <h4>Your items</h4>
                     {userItems.map(item => <Item user={true} key={item.id} sellItem={sellItem} {...item}/>)}
 
+                </div>
+
+                <div className="store-gundams">
+                    <h4>Gundams for sale</h4>
+                    {gfs.map(gundam => <StoreGundam key={gundam.id} {...gundam}/>)}
                 </div>
 
 

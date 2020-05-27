@@ -61,7 +61,7 @@
   height: 100%;
   display: inline-block;
   width: 50%;
-  position: fixed;
+  position: flex;
   z-index: 1;
   top: 100;
   padding-top: 20px;

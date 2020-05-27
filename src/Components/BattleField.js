@@ -14,6 +14,7 @@ class BattleField extends Component {
         userAtt: null,
         opponentHealth: null,
         myTurn: true,
+        startBattle: false,
         opponentWave: 0
     };
 
@@ -86,6 +87,10 @@ class BattleField extends Component {
         );
     };
 
+    toggleBattle = () => {
+        this.setState({ startBattle: !this.state.startBattle})
+    }
+
 
     totalAttBonus = (id) => {
         const itemSlots = this.matchGundam(id);
@@ -135,7 +140,7 @@ class BattleField extends Component {
                    (<><h3>Select Gundam</h3>
                     {this.props.userGundams.map((gundam) => this.showGundam(gundam))}</>)
 
-                 : //once you choose gundam
+                 : //once you choose gundam and level (if this.state.startBattle?)
                        ( <div className={"battlefield"}>
                  
                            {opponentHealth > 0 && userHealth > 0 ? 
