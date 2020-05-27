@@ -100,6 +100,14 @@ class App extends React.Component {
            balance: newBalance}}))
   }
 
+  setNewUserGundam = (value) => {
+    console.log('value :>> ', value);
+    console.log('this.state.gundams :>> ', this.state.gundams);
+    this.setState({ 
+      userGundams: [...this.state.userGundams, this.state.gundams.find(gundam => gundam.id === value.gundam_id)],
+      equipped: [...this.state.equipped, value]})
+  }
+
   getUserStuff = () => {
     fetch('http://localhost:3000/user_gundams')
     .then(resp => resp.json())
@@ -129,7 +137,6 @@ class App extends React.Component {
       body: JSON.stringify({in_use: true})})
       .then(resp => resp.json())
       .then(newInv => this.setState({inventories: this.state.inventories.map(inventory => inventory.id === patchInventory.id ? newInv : inventory)}))
-    // this.setState({inventories: this.state.inventories.map(inventory => inventory.user_id === userId && inventory.item_id === itemId ? !inventory.in_use : inventory)})
   }
 
   unequipItem = (userId, itemId) => {
@@ -147,7 +154,7 @@ class App extends React.Component {
   render() {
     // console.clear() 
     console.log('App State :>> ', this.state);
-    const {setCurrentUser, getUserStuff, sellItem, buyItem, decreaseBalance, toggleItemInUse, unequipItem, removeEquipped, addEquippedSlot1,addEquippedSlot2,addEquippedSlot3,addEquippedSlot4} = this
+    const {setNewUserGundam, setCurrentUser, getUserStuff, sellItem, buyItem, decreaseBalance, toggleItemInUse, unequipItem, removeEquipped, addEquippedSlot1,addEquippedSlot2,addEquippedSlot3,addEquippedSlot4} = this
     const {gundams, users, currentUser, userGundams, userItems, items, equipped, inventories} = this.state
     return (
       <div>
@@ -162,13 +169,15 @@ class App extends React.Component {
         addEquippedSlot2={addEquippedSlot2} addEquippedSlot3={addEquippedSlot3} addEquippedSlot4={addEquippedSlot4}
         removeEquipped={removeEquipped}
         inventories={inventories}/>}/>
+
         <Route path="/shop" render={(props) => <Shop {...props} items={items} inventories={inventories}
-         setCurrentUser={setCurrentUser} currentUserId={currentUser.id} 
+         setCurrentUser={setCurrentUser} gundams={gundams} currentUserId={currentUser.id} 
          getUserStuff={getUserStuff} currentUser={currentUser} 
          sellItem={sellItem} userItems={userItems}
          buyItem={buyItem} decreaseBalance={decreaseBalance}/>} /> 
+
         <Route path="/battlefield" render={(props) => <BattleField {...props} currentUser={currentUser} equipped={equipped} items={items} userGundams={userGundams} gundams={gundams} getUserStuff={getUserStuff}/>}/>
-        <Route path="/" render={(props) => <LoginSignup {...props} setCurrentUser={setCurrentUser} users={users} />}/>
+        <Route path="/" render={(props) => <LoginSignup {...props} setNewUserGundam={setNewUserGundam} currentUser={currentUser} gundams={gundams} setCurrentUser={setCurrentUser} users={users} />}/>
         </Switch>
         </>
       </div>
