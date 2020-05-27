@@ -59,11 +59,11 @@
 
 .split {
   height: 100%;
+  display: inline-block;
   width: 50%;
   position: fixed;
   z-index: 1;
   top: 100;
-  overflow-x: hidden;
   padding-top: 20px;
 }
 
@@ -81,6 +81,28 @@
   max-width:600px;
 }
 
+.image200{
+  width:100%;
+  max-width:200px;
+}
+
 .battlefield{
   background-image: url("./BattleBackgrounds/GundamCity.jpg");
 }
+
+.battlefieldtext{
+  background-color: white;
+}
+
+@keyframes attack-left {
+  from { transform : translateX(0) }
+    50%  { transform : translateX(-250px) }
+    to   { transform : translateX(0%) }
+}
+
+.attack-left{
+  animation-name: attack-left;
+  animation-duration: 4s;
+}
+
+

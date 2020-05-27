@@ -17,7 +17,7 @@ class Shop extends Component {
 
     buyItem = (item) => {
         if (this.props.currentUser.balance > item.price) {
-        let newInventories = {user_id: this.props.currentUserId, item_id: item.id, in_use: null}
+        let newInventories = {user_id: this.props.currentUserId, item_id: item.id, in_use: false}
         let newBalance =  this.props.currentUser.balance - item.price
 
         fetch(`http://localhost:3000/inventories`, {
@@ -43,13 +43,13 @@ class Shop extends Component {
             .then(response => response.json())
             .then(json => console.log('updated your balance', json))
             .then(this.props.decreaseBalance(newBalance))
-            .then(this.props.getUserStuff())
         } else {alert("You cant afford this item. Win some more battles and come back!")}
 
     }
     sellItem = (item) => {
         let newBalance =  this.props.currentUser.balance + (item.price * .5)
         let itemForSale = this.props.inventories.find(userItem => userItem.item_id === item.id)
+        console.log('item for sale :>> ', itemForSale);
         console.log('item :>> ', item);
         fetch(`http://localhost:3000/inventories/${itemForSale.id}`, {
             method: 'DELETE',
@@ -57,6 +57,7 @@ class Shop extends Component {
                 'accept': 'application/json',
                 'content-type': 'application/json'
             }})
+            .then(this.props.sellItem(itemForSale))
 
         fetch(`http://localhost:3000/users/${this.props.currentUserId}`, {
             method: 'PATCH',
@@ -71,7 +72,7 @@ class Shop extends Component {
                 this.props.setCurrentUser(user),
                 console.log('updated your balance')
                 )
-                .then(this.props.getUserStuff())
+             
 
 
     }
@@ -80,7 +81,7 @@ class Shop extends Component {
     render() {
         // console.log('shop props :>> ', this.props);
         // console.log('user :>> ', this.props.currentUser);
-        const {items, userItems} = this.props
+        const {items, userItems, currentUser} = this.props
         const {buyItem, sellItem} = this
         return (
             <div>
@@ -88,6 +89,8 @@ class Shop extends Component {
                 <h3>Welcome to the Shop</h3>
                 <h3>Use your earnings to buy Upgrades for your gundam</h3>
                 <h3>Or sell old parts for cash</h3>
+                <h3>Your Balance: {currentUser.balance}</h3>
+
                 </center>
 
                 <div className="split right">

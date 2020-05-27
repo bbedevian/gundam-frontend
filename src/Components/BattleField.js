@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import ProfileGundam from "./ProfileGundam";
 import BattleFieldGundam from "./BattleFieldGundam";
 import EnemyGundam from "./EnemyGundam";
+import { Link } from 'react-router-dom';
 
 class BattleField extends Component {
 
@@ -13,6 +14,7 @@ class BattleField extends Component {
         userAtt: null,
         opponentHealth: null,
         myTurn: true,
+        opponentWave: 0
     };
 
     componentDidMount() {
@@ -99,7 +101,7 @@ class BattleField extends Component {
     showGundam = (gundam) => {
         return (
             <>
-                <img src={gundam.img_url} alt={"this is a gundam"} />
+                <img className="image200" src={gundam.img_url} alt={"this is a gundam"} />
                 <h3>{gundam.name}</h3>
                 <button onClick={() => this.selectGundam(gundam)}>
                     Select This Gundam
@@ -113,21 +115,31 @@ class BattleField extends Component {
             selectedGundam: gundam,
             userHealth: gundam.hp + this.totalHpBonus(gundam.id),
             userAtt: gundam.attack + this.totalAttBonus(gundam.id),
-            opponentHealth: this.state.opponents[0].hp
+            opponentHealth: this.state.opponents[this.state.opponentWave].hp
         });
     };
 
+    increaseOpponent = () => {
+        this.setState({ opponentWave: this.state.opponentWave +1})
+    }
+
 
     render() {
-        const { myTurn, selectedGundam, userAtt, userHealth, opponents } = this.state;
-        const { getAttacked, attackOpponent } = this;
+        const { myTurn, selectedGundam, userAtt, userHealth, opponents, opponentHealth, opponentWave } = this.state;
+        const {currentUser} = this.props
+        const { getAttacked, attackOpponent, increaseOpponent } = this;
         console.log("battlefield", this.state)
         return (
             <div>
-                {this.state.selectedGundam === null ? (
-                    this.props.userGundams.map((gundam) => this.showGundam(gundam))
-                ) : (
-                        <>
+                {this.state.selectedGundam === null ? 
+                   (<><h3>Select Gundam</h3>
+                    {this.props.userGundams.map((gundam) => this.showGundam(gundam))}</>)
+
+                 : //once you choose gundam
+                       ( <div className={"battlefield"}>
+                 
+                           {opponentHealth && userHealth > 0 ? 
+                           <>
                             <BattleFieldGundam
                                 key={selectedGundam.id}
                                 selectedGundam={selectedGundam}
@@ -139,9 +151,19 @@ class BattleField extends Component {
                             <EnemyGundam
                                 key={selectedGundam.id}
                                 myTurn={myTurn}
-                                getAttacked={getAttacked} opponents={opponents} />
-                        </>
-                    )}
+                                opponentHealth={opponentHealth}
+                                getAttacked={getAttacked} opponents={opponents}
+                                currentUser={currentUser}
+                                opponentWave={opponentWave}
+                                increaseOpponent={increaseOpponent}
+                                 />
+                                </>
+                           :
+                           this.props.history.push('/profile')
+                            // null //this needs to send you back to profile page or battlefield
+                           }
+                        </div>
+                       )}
             </div>
         )
     }
