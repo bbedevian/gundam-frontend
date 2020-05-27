@@ -65,6 +65,7 @@
   z-index: 1;
   top: 100;
   padding-top: 20px;
+  background-color: transparent;
 }
 
 
@@ -88,10 +89,13 @@
 
 .battlefield{
   background-image: url("./BattleBackgrounds/GundamCity.jpg");
+  height: 475px;
+  width: auto;
 }
 
 .battlefieldtext{
   background-color: white;
+  width: auto;
 }
 
 @keyframes attack-left {

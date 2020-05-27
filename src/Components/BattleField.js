@@ -138,7 +138,7 @@ class BattleField extends Component {
                  : //once you choose gundam
                        ( <div className={"battlefield"}>
                  
-                           {opponentHealth && userHealth > 0 ? 
+                           {opponentHealth > 0 && userHealth > 0 ? 
                            <>
                             <BattleFieldGundam
                                 key={selectedGundam.id}
@@ -159,7 +159,13 @@ class BattleField extends Component {
                                  />
                                 </>
                            :
-                           this.props.history.push('/profile')
+                        //    console.log("Inside else statement of Battlefield")
+                           <Link to='/profile'>
+                           <button>
+                               To profile page
+                           </button>
+                         </Link>
+                        //    this.props.history.push('/profile')
                             // null //this needs to send you back to profile page or battlefield
                            }
                         </div>
