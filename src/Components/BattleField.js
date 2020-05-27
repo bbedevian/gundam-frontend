@@ -18,7 +18,7 @@ class BattleField extends Component {
     };
 
     componentDidMount() {
-        this.props.getUserStuff()
+        // this.props.getUserStuff()
         this.getOpponents()
     }
 
@@ -119,9 +119,9 @@ class BattleField extends Component {
         });
     };
 
-    increaseOpponent = () => {
-        this.setState({ opponentWave: this.state.opponentWave +1})
-    }
+    // increaseOpponent = () => {
+    //     this.setState({ opponentWave: this.state.opponentWave +1})
+    // }
 
 
     render() {
@@ -155,7 +155,7 @@ class BattleField extends Component {
                                 getAttacked={getAttacked} opponents={opponents}
                                 currentUser={currentUser}
                                 opponentWave={opponentWave}
-                                increaseOpponent={increaseOpponent}
+                                // increaseOpponent={increaseOpponent}
                                  />
                                 </>
                            :
