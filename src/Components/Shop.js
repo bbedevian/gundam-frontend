@@ -45,8 +45,39 @@ class Shop extends Component {
             .then(json => console.log('updated your balance', json))
             .then(this.props.decreaseBalance(newBalance))
         } else {alert("You cant afford this item. Win some more battles and come back!")}
-
     }
+
+    buyGundam = (gundam) => {
+        if (this.props.currentUser.balance > gundam.price) {
+        let newUserGundam = {user_id: this.props.currentUserId, gundam_id: gundam.id}
+        let newBalance =  this.props.currentUser.balance - gundam.price
+
+        fetch(`http://localhost:3000/user_gundams`, {
+            method: 'POST',
+            headers: {
+                'accept': 'application/json',
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(newUserGundam)
+            })
+            .then(response => response.json())
+            .then(json => this.props.buyGundam(json),
+                console.log('gundam added to your inventory'))
+
+        fetch(`http://localhost:3000/users/${this.props.currentUserId}`, {
+            method: 'PATCH',
+            headers: {
+                'accept': 'application/json',
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify({balance: newBalance})
+            })
+            .then(response => response.json())
+            .then(json => console.log('updated your balance', json))
+            .then(this.props.decreaseBalance(newBalance))
+        } else {alert("You cant afford this Gundam! Win some more battles and come back!")}
+    }
+
     sellItem = (item) => {
         let newBalance =  this.props.currentUser.balance + (item.price * .5)
         let itemForSale = this.props.inventories.find(userItem => userItem.item_id === item.id)
@@ -83,7 +114,7 @@ class Shop extends Component {
         // console.log('shop props :>> ', this.props);
         // console.log('user :>> ', this.props.currentUser);
         const {items, userItems, currentUser, gundams} = this.props
-        const {buyItem, sellItem} = this
+        const {buyItem, sellItem, buyGundam} = this
         let gfs = gundams.filter(gundam => gundam.price ? gundam : null)
         return (
             <div>
@@ -109,7 +140,7 @@ class Shop extends Component {
 
                 <div className="store-gundams">
                     <h4>Gundams for sale</h4>
-                    {gfs.map(gundam => <StoreGundam key={gundam.id} {...gundam}/>)}
+                    {gfs.map(gundam => <StoreGundam key={gundam.id} {...gundam} buyGundam={buyGundam}/>)}
                 </div>
 
 

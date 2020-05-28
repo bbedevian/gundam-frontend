@@ -14,7 +14,7 @@ class EnemyGundam extends Component {
             body: JSON.stringify({balance: this.props.currentUser.balance + prize})
             })
             .then(response => response.json())
-            .then(json => console.log(json))
+            .then(json => console.log("added prize" , json))
     }
 
     render() {
