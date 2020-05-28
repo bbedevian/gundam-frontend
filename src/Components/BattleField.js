@@ -15,7 +15,8 @@ class BattleField extends Component {
         opponentHealth: null,
         myTurn: true,
         startBattle: false,
-        opponentWave: 0
+        opponentWave: 0,
+        selectedLevel: null
     };
 
     componentDidMount() {
@@ -120,27 +121,77 @@ class BattleField extends Component {
             selectedGundam: gundam,
             userHealth: gundam.hp + this.totalHpBonus(gundam.id),
             userAtt: gundam.attack + this.totalAttBonus(gundam.id),
-            opponentHealth: this.state.opponents[this.state.opponentWave].hp
         });
     };
+
+    rewardUser = () => {
+        let prize = (Math.floor(Math.random() * (50 - 25 + 1)) + 25)
+        let newLevel = this.props.currentUser.level
+        
+        if (newLevel < this.state.selectedLevel) {newLevel +=1 } 
+
+        console.log('prize :>> ', prize);
+        fetch(`http://localhost:3000/users/${this.props.currentUser.id}`, {
+            method: 'PATCH',
+            headers: {
+                'accept': 'application/json',
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                balance: this.props.currentUser.balance + prize,
+                level: newLevel
+            })
+            })
+            .then(response => response.json())
+            .then(updatedUser => 
+                (this.props.changeBalance(updatedUser.balance),
+                this.props.changeLevel(updatedUser.level))
+                )
+
+
+    }
 
     // increaseOpponent = () => {
     //     this.setState({ opponentWave: this.state.opponentWave +1})
     // }
 
+    selectLevel = (event) => {
+        this.setState({ selectedLevel: parseInt(event.target.id),
+            opponentHealth: this.state.opponents[event.target.id -1].hp
+        })
+    }
+
+    showLevels = (number) => {
+        let i = 1
+        if (number > 4) {number = 4}
+        let buttonsArray =[]
+        while (i <= number) {
+            buttonsArray.push(<button id={i} onClick={(event) => this.selectLevel(event)}>Level {i}</button>)
+            i++
+        }
+        return buttonsArray
+    }
+
 
     render() {
-        const { myTurn, selectedGundam, userAtt, userHealth, opponents, opponentHealth, opponentWave } = this.state;
+        const { myTurn, selectedGundam, userAtt, userHealth, opponents, opponentHealth, changeBalance, startBattle, selectedLevel } = this.state;
         const {currentUser} = this.props
-        const { getAttacked, attackOpponent, increaseOpponent } = this;
+        const { getAttacked, attackOpponent, showLevels, rewardUser } = this;
         console.log("battlefield", this.state)
+        let availableLevel = currentUser.level + 1
         return (
             <div>
-                {this.state.selectedGundam === null ? 
-                   (<><h3>Select Gundam</h3>
-                    {this.props.userGundams.map((gundam) => this.showGundam(gundam))}</>)
-
-                 : //once you choose gundam and level (if this.state.startBattle?)
+                {
+                startBattle === false ? 
+                    selectedGundam === null || selectedLevel === null? 
+                    (<>
+                        <h3>Select Gundam</h3>
+                        {this.props.userGundams.map((gundam) => this.showGundam(gundam))}
+                        <h3>Select Level</h3>
+                        {showLevels(availableLevel)}
+                        </>)
+                        : <button onClick={() => this.toggleBattle()}>Start Battle</button>
+                 : 
                        ( <div className={"battlefield"}>
                  
                            {opponentHealth > 0 && userHealth > 0 ? 
@@ -157,21 +208,21 @@ class BattleField extends Component {
                                 key={selectedGundam.id}
                                 myTurn={myTurn}
                                 opponentHealth={opponentHealth}
+                                changeBalance={changeBalance}
                                 getAttacked={getAttacked} opponents={opponents}
                                 currentUser={currentUser}
-                                opponentWave={opponentWave}
-                                // increaseOpponent={increaseOpponent}
+                                selectedLevel={selectedLevel}
                                  />
                                 </>
                            :
-                        //    console.log("Inside else statement of Battlefield")
+                      
+                        <>
                            <Link to='/profile'>
-                           <button>
+                           <button onClick={() => rewardUser() && this.toggleBattle()}>
                                To profile page
                            </button>
                          </Link>
-                        //    this.props.history.push('/profile')
-                            // null //this needs to send you back to profile page or battlefield
+                         </>
                            }
                         </div>
                        )}
