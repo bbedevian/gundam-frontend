@@ -26,6 +26,7 @@ Next Steps
     - prize a multiple of level
     - change battlefield to have a start battle button in addition to choose gundam, set currentbattle level (choosen by user)
 
+NOTE~~ I changed decrease balance to change balance in store
 
   
 

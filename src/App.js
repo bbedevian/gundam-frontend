@@ -93,6 +93,7 @@ class App extends React.Component {
     })
   }
 
+
   buyGundam = (userGundam) => {
     let newGundam = this.state.gundams.find(gundam => gundam.id === userGundam.gundam_id)
     this.setState({
@@ -102,11 +103,18 @@ class App extends React.Component {
     alert(`You just purchased ${newGundam.name} Gundam! You can view your Mobile Suit in your profile!`)
   }
 
-  decreaseBalance = (newBalance) => {
+  changeBalance = (newBalance) => {
     this.setState(prevState => ({
       ...prevState, currentUser: {
         ...prevState.currentUser,
            balance: newBalance}}))
+  }
+
+  changeLevel = (newLevel) => {
+    this.setState(prevState => ({
+      ...prevState, currentUser: {
+        ...prevState.currentUser,
+           level: newLevel}}))
   }
 
   setNewUserGundam = (value) => {
@@ -163,7 +171,9 @@ class App extends React.Component {
   render() {
     // console.clear() 
     console.log('App State :>> ', this.state);
-    const {setNewUserGundam, setCurrentUser, getUserStuff, sellItem, buyItem, buyGundam, decreaseBalance, toggleItemInUse, unequipItem, removeEquipped, addEquippedSlot1,addEquippedSlot2,addEquippedSlot3,addEquippedSlot4} = this
+
+    const {setNewUserGundam, setCurrentUser, getUserStuff,changeLevel,sellItem, buyGundam, buyItem, changeBalance, toggleItemInUse, unequipItem, removeEquipped, addEquippedSlot1,addEquippedSlot2,addEquippedSlot3,addEquippedSlot4} = this
+
     const {gundams, users, currentUser, userGundams, userItems, items, equipped, inventories} = this.state
     return (
       <div>
@@ -183,9 +193,13 @@ class App extends React.Component {
          setCurrentUser={setCurrentUser} gundams={gundams} currentUserId={currentUser.id} 
          getUserStuff={getUserStuff} currentUser={currentUser} 
          sellItem={sellItem} userItems={userItems} buyGundam={buyGundam}
-         buyItem={buyItem} decreaseBalance={decreaseBalance}/>} /> 
+         buyItem={buyItem} changeBalance={changeBalance}/>} /> 
 
-        <Route path="/battlefield" render={(props) => <BattleField {...props} currentUser={currentUser} equipped={equipped} items={items} userGundams={userGundams} gundams={gundams} getUserStuff={getUserStuff}/>}/>
+
+        <Route path="/battlefield" render={(props) => <BattleField {...props} 
+        currentUser={currentUser} equipped={equipped} items={items} userGundams={userGundams} 
+        gundams={gundams} changeLevel={changeLevel} changeBalance={changeBalance}  getUserStuff={getUserStuff}/>}/>
+       
         <Route path="/" render={(props) => <LoginSignup {...props} setNewUserGundam={setNewUserGundam} currentUser={currentUser} gundams={gundams} setCurrentUser={setCurrentUser} users={users} />}/>
         </Switch>
         </>

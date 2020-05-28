@@ -8,7 +8,7 @@ class BattleFieldGundam extends Component {
         return (
             <div className="split right">
                 <h1 className="battlefieldtext" >{selectedGundam.name}</h1>
-                <img className="image200 attack-left" src={selectedGundam.img_url} alt="selected Gundam"/>
+                <img className="image200 attack-right" src={selectedGundam.img_url} alt="selected Gundam"/>
                 <p className="battlefieldtext" >My Health: {userHealth}</p>
                 {myTurn ? 
                 userHealth > 0 ? 
