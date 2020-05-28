@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 class EnemyGundam extends Component {
 
+
     render() {
         const {opponents, myTurn, getAttacked, opponentHealth, currentUser, selectedLevel} = this.props
         console.log('enemy gundam props :>> ', this.props);

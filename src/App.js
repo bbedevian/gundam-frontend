@@ -93,6 +93,16 @@ class App extends React.Component {
     })
   }
 
+
+  buyGundam = (userGundam) => {
+    let newGundam = this.state.gundams.find(gundam => gundam.id === userGundam.gundam_id)
+    this.setState({
+      equipped: [...this.state.equipped, userGundam],
+      userGundams: [...this.state.userGundams, newGundam]
+    })
+    alert(`You just purchased ${newGundam.name} Gundam! You can view your Mobile Suit in your profile!`)
+  }
+
   changeBalance = (newBalance) => {
     this.setState(prevState => ({
       ...prevState, currentUser: {
@@ -161,7 +171,9 @@ class App extends React.Component {
   render() {
     // console.clear() 
     console.log('App State :>> ', this.state);
-    const {setNewUserGundam, setCurrentUser, getUserStuff,changeLevel,sellItem, buyItem, changeBalance, toggleItemInUse, unequipItem, removeEquipped, addEquippedSlot1,addEquippedSlot2,addEquippedSlot3,addEquippedSlot4} = this
+
+    const {setNewUserGundam, setCurrentUser, getUserStuff,changeLevel,sellItem, buyGundam, buyItem, changeBalance, toggleItemInUse, unequipItem, removeEquipped, addEquippedSlot1,addEquippedSlot2,addEquippedSlot3,addEquippedSlot4} = this
+
     const {gundams, users, currentUser, userGundams, userItems, items, equipped, inventories} = this.state
     return (
       <div>
@@ -180,8 +192,9 @@ class App extends React.Component {
         <Route path="/shop" render={(props) => <Shop {...props} items={items} inventories={inventories}
          setCurrentUser={setCurrentUser} gundams={gundams} currentUserId={currentUser.id} 
          getUserStuff={getUserStuff} currentUser={currentUser} 
-         sellItem={sellItem} userItems={userItems}
+         sellItem={sellItem} userItems={userItems} buyGundam={buyGundam}
          buyItem={buyItem} changeBalance={changeBalance}/>} /> 
+
 
         <Route path="/battlefield" render={(props) => <BattleField {...props} 
         currentUser={currentUser} equipped={equipped} items={items} userGundams={userGundams} 
