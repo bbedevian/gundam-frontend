@@ -74,7 +74,7 @@ class Shop extends Component {
             })
             .then(response => response.json())
             .then(json => console.log('updated your balance', json))
-            .then(this.props.decreaseBalance(newBalance))
+            .then(this.props.changeBalance(newBalance))
         } else {alert("You cant afford this Gundam! Win some more battles and come back!")}
     }
 
@@ -104,8 +104,6 @@ class Shop extends Component {
                 this.props.setCurrentUser(user),
                 console.log('updated your balance')
                 )
-             
-
 
     }
 

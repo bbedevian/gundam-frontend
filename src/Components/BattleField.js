@@ -215,7 +215,7 @@ class BattleField extends Component {
                                  />
                                 </>
                            :
-                      
+                        opponentHealth <= 0 ? 
                         <>
                            <Link to='/profile'>
                            <button onClick={() => rewardUser() && this.toggleBattle()}>
@@ -223,6 +223,15 @@ class BattleField extends Component {
                            </button>
                          </Link>
                          </>
+                         :
+                        <>
+                           <Link to='/profile'>
+                           <button onClick={() => this.toggleBattle()}>
+                               To profile page
+                           </button>
+                         </Link>
+                         </>
+                        
                            }
                         </div>
                        )}
