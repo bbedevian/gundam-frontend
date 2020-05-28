@@ -15,9 +15,9 @@ class EnemyGundam extends Component {
 
         return (
             <div className="split left">
-                <h1 >{currentOpponent.name}</h1>
+                <h1 className="battlefieldtext">{currentOpponent.name}</h1>
                 <img className="image200" src={currentOpponent.img_url} alt="nothing to see here"/>
-                <p >Enemy Health: {opponentHealth}</p>
+                <p className="battlefieldtext">Enemy Health: {opponentHealth}</p>
             </div>
         );
     }

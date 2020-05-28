@@ -146,7 +146,7 @@ const ProfileGundam = (props) => {
 
   return (
     <div className="profile-gundam">
-      <img className="image600" src={img_url} alt={name} />
+      <img className="image200" src={img_url} alt={name} />
       <h1>{name}</h1>
       <h3>Base Hp: {hp}</h3>
       <h3>Equipment HP+: {totalHpBonus()}</h3>

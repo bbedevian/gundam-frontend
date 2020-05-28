@@ -2,6 +2,13 @@
   text-align: center;
 }
 
+body {
+  background-image: url("./BattleBackgrounds/GundamCity.jpg"); 
+  background-attachment: fixed;
+  height: 805px;
+  width: auto;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -50,13 +57,6 @@
 }
 
 
-.item-card {
-  width: 150px;
-  margin: 10px;
-  border: 1px solid black;
-  padding: 5px;
-}
-
 .split {
   height: 100%;
   display: inline-block;
@@ -82,14 +82,9 @@
   max-width:600px;
 }
 
-.image200{
-  width:100%;
-  max-width:200px;
-}
-
 .battlefield{
   background-image: url("./BattleBackgrounds/GundamCity.jpg");
-  height: 475px;
+  height: 805px;
   width: auto;
 }
 
@@ -109,4 +104,70 @@
   animation-duration: 4s;
 }
 
+.profile-gundam {
+  max-height: auto;
+  max-width: 250px;
+  border: solid rgba(69, 250, 13, 0.7);
+  position: relative;
+  padding: 10px;
+  margin-left: 10px;
+  color: white;
+  background-color: rgba(0,0,0,.5)
+}
 
+.profile-page{
+  background-image: url("./BattleBackgrounds/hangar.jpg"); 
+  background-size: 1300px;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  display: grid;
+  grid-template-columns: auto auto;
+  padding: 11px;
+}
+
+.user-info{
+  margin-left: 10em;
+  position: relative;
+}
+
+.gundam-grid{
+  display: grid;
+  grid-template-columns: auto auto;
+}
+
+.user-items{
+  display: grid;
+  grid-template-columns: auto auto;
+  margin-left: 50em;
+  position: absolute;
+  margin-top: 150px;
+  border: solid rgba(69, 250, 13, 0.7);
+  background-color: rgba(0,0,0,.5);
+  color: white;
+}
+
+.item-card {
+  width: 150px;
+  margin: 10px;
+  border: solid rgba(69, 250, 13, 0.7);
+  padding: 5px;
+  background-color: rgba(0,0,0,.5);
+  color: white;
+}
+
+.item-title{
+  margin-left: 7em;
+  margin-top: -30px;
+  position: absolute;
+  font-size: 20px;
+  /* font-family: 'Arizonia'; */
+}
+
+
+.image200{
+  width:100%;
+  max-width:200px;
+  opacity: none;
+}
+
+@import url("https://fonts.googleapis.com/css?family=Arizonia")

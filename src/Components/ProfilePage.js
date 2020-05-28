@@ -81,7 +81,8 @@ class ProfilePage extends Component {
         // need to match gundam_id with gundam_id in equipped to pass that object down. 
         const {userGundams, userItems, equipped, currentUser, inventories, items, unequipItem} = this.props
         return (
-            <div>
+            <div className="profile-page">
+                <div className="gundam-grid">
                 {userGundams.map(gundam => 
                 <ProfileGundam key={gundam.id} 
                 items={items} 
@@ -100,9 +101,16 @@ class ProfilePage extends Component {
                 inventories={inventories}
                 unequipItem={unequipItem}
                 userItems={userItems}/>)}
-                <h3>Your Items</h3>
+                </div>
+                <div className="user-info">
+                <h3>{currentUser.balance}</h3>
+                </div>
+
+                <div className="user-items">
+                <h3 className="item-title">Your Items</h3>
                 {userItems.map(item => <Item key={item.id} {...item}/>)}
                 {/* map through useritems and return profile item */}
+                </div>
             </div>
         );
     }
