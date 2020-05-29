@@ -4,7 +4,7 @@ class StoreGundam extends Component {
     render() {
         const {name, img_url, attack, hp, rarity, description, price} = this.props
         return (
-            <div>
+            <div className="profile-gundam">
                 <img className="image200" src={img_url} alt={name} />
                 <h1>{name}</h1>
                 <h1>{price} Credits</h1>

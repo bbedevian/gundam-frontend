@@ -11,8 +11,10 @@ class BattleField extends Component {
         selectedGundam: null,
         opponentGundam: null,
         userHealth: null,
+        userTotalHealth: null,
         userAtt: null,
         opponentHealth: null,
+        opponentTotalHealth: null,
         myTurn: true,
         startBattle: false,
         opponentWave: 0,
@@ -106,13 +108,13 @@ class BattleField extends Component {
 
     showGundam = (gundam) => {
         return (
-            <>
+            <div className="profile-gundam">
                 <img className="image200" src={gundam.img_url} alt={"this is a gundam"} />
                 <h3>{gundam.name}</h3>
                 <button onClick={() => this.selectGundam(gundam)}>
                     Select This Gundam
         </button>
-            </>
+            </div>
         );
     };
 
@@ -120,6 +122,7 @@ class BattleField extends Component {
         this.setState({
             selectedGundam: gundam,
             userHealth: gundam.hp + this.totalHpBonus(gundam.id),
+            userTotalHealth: gundam.hp + this.totalHpBonus(gundam.id),
             userAtt: gundam.attack + this.totalAttBonus(gundam.id),
         });
     };
@@ -157,7 +160,8 @@ class BattleField extends Component {
 
     selectLevel = (event) => {
         this.setState({ selectedLevel: parseInt(event.target.id),
-            opponentHealth: this.state.opponents[event.target.id -1].hp
+            opponentHealth: this.state.opponents[event.target.id -1].hp,
+            opponentTotalHealth: this.state.opponents[event.target.id -1].hp
         })
     }
 
@@ -174,25 +178,33 @@ class BattleField extends Component {
 
 
     render() {
-        const { myTurn, selectedGundam, userAtt, userHealth, opponents, opponentHealth, changeBalance, startBattle, selectedLevel } = this.state;
+        const { myTurn, selectedGundam, userAtt, userHealth, opponents, opponentHealth, changeBalance, startBattle, selectedLevel, userTotalHealth, opponentTotalHealth } = this.state;
         const {currentUser} = this.props
         const { getAttacked, attackOpponent, showLevels, rewardUser } = this;
         console.log("battlefield", this.state)
         let availableLevel = currentUser.level + 1
         return (
-            <div>
+            <div className={startBattle ?  `level${selectedLevel}` : "battle-select"}>
                 {
                 startBattle === false ? 
-                    selectedGundam === null || selectedLevel === null? 
-                    (<>
-                        <h3>Select Gundam</h3>
+                (<>
+                    <div className="gundam-grid">
+                        <h3>Select Gundam</h3><br></br>
+                        <h3>Currently Selected: {selectedGundam ? selectedGundam.name : "Nothing selected"}</h3><br></br>
                         {this.props.userGundams.map((gundam) => this.showGundam(gundam))}
-                        <h3>Select Level</h3>
-                        {showLevels(availableLevel)}
+                    </div>
+                    <div className="level-select">
+                        <center><h3>Select Level</h3><br></br>
+                        <h3>Currently Selected: {selectedLevel ? selectedLevel : "Nothing selected"}</h3>
+                        {showLevels(availableLevel)}</center>
+                    </div>
+                    {selectedGundam === null || selectedLevel === null ? <></> : 
+                    <center><button className="battle-button" onClick={() => this.toggleBattle()}>Start Battle</button></center>} 
+                        
                         </>)
-                        : <button onClick={() => this.toggleBattle()}>Start Battle</button>
+                        
                  : 
-                       ( <div className={"battlefield"}>
+                       ( <div>
                  
                            {opponentHealth > 0 && userHealth > 0 ? 
                            <>
@@ -203,6 +215,7 @@ class BattleField extends Component {
                                 attackOpponent={attackOpponent}
                                 userAtt={userAtt}
                                 userHealth={userHealth}
+                                userTotalHealth={userTotalHealth}
                             />
                             <EnemyGundam
                                 key={selectedGundam.id}
@@ -212,25 +225,29 @@ class BattleField extends Component {
                                 getAttacked={getAttacked} opponents={opponents}
                                 currentUser={currentUser}
                                 selectedLevel={selectedLevel}
+                                opponentTotalHealth={opponentTotalHealth}
                                  />
                                 </>
                            :
                         opponentHealth <= 0 ? 
-                        <>
+                        <div className="victory">
+                            <h1 className="text1">VICTORY</h1>
                            <Link to='/profile'>
-                           <button onClick={() => rewardUser() && this.toggleBattle()}>
+                           <button className="end-button" onClick={() => rewardUser() && this.toggleBattle()}>
                                To profile page
                            </button>
                          </Link>
-                         </>
+                         </div>
                          :
-                        <>
+                        <div className="defeat">
+                            <h1 className="text1">Defeated.</h1>
                            <Link to='/profile'>
-                           <button onClick={() => this.toggleBattle()}>
+                           <button className="end-button" onClick={() => this.toggleBattle()}>
                                To profile page
                            </button>
                          </Link>
-                         </>
+                            <h1>Get good noob!</h1>
+                         </div>
                         
                            }
                         </div>

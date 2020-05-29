@@ -78,10 +78,12 @@ class LoginSignup extends Component {
     render() {
         let { isNewUser, username } = this.state
         return (
-             <div>
-                <h3>{isNewUser ? 'Sign Up' : 'Login'}</h3>
+             <div className="welcome">
+                 <div className="login">
+                <h1 style={{fontSize:"50px"}}>{isNewUser ? 'Sign Up' : 'Login'}</h1>
                 { isNewUser ? this.renderSignup() : this.renderLogin() }
-                <button type="submit" onClick={ isNewUser ? () => this.createUser(username) : this.handleSubmit}>Submit</button>
+                <button className="login-button" type="submit" onClick={ isNewUser ? () => this.createUser(username) : this.handleSubmit}>Submit</button>
+                </div>
             </div>
         );
     }

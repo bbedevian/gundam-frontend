@@ -177,9 +177,9 @@ class App extends React.Component {
     const {gundams, users, currentUser, userGundams, userItems, items, equipped, inventories} = this.state
     return (
       <div>
-        <>
-        <Nav />
-        {/* <Nav currentUserId={currentUser.id} /> */}
+        <> 
+        {currentUser ? <Nav /> : null}
+
         <Switch> 
         <Route path="/profile" render={(props) => <ProfilePage {...props} 
         currentUser={currentUser} toggleItemInUse={toggleItemInUse} 

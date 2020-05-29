@@ -7,7 +7,8 @@ import StoreGundam from './StoreGundam';
 class Shop extends Component {
 
     state = {
-        userItems: this.props.userItems
+        userItems: this.props.userItems,
+        showItems: true
     }
 
     componentDidMount () {
@@ -108,6 +109,9 @@ class Shop extends Component {
     }
 
 
+    toggleShow = () => {
+        this.setState({showItems: !this.state.showItems})
+    }
     render() {
         // console.log('shop props :>> ', this.props);
         // console.log('user :>> ', this.props.currentUser);
@@ -115,32 +119,41 @@ class Shop extends Component {
         const {buyItem, sellItem, buyGundam} = this
         let gfs = gundams.filter(gundam => gundam.price ? gundam : null)
         return (
-            <div>
-                <center>
+            <div className="shop-container">
+                {/* <div className="welcome-shop">
                 <h3>Welcome to the Shop</h3>
                 <h3>Use your earnings to buy Upgrades for your gundam</h3>
                 <h3>Or sell old parts for cash</h3>
                 <h3>Your Balance: {currentUser.balance}</h3>
-
+                </div> */}
+                {this.state.showItems ? 
+                <div className="store-items">
+                    <h2 style={{color: "white"}}>Items for sale</h2><br></br><br></br>
+                <center>
+                    <button className="store-button" onClick={this.toggleShow}>{this.state.showItems ? "Show Gundams" : "Show Items"}</button>
                 </center>
-
-                <div className="split right">
-                    <h4>Items for sale</h4>
                     {items.map(item => <Item store={true} key={item.id} buyItem={buyItem}{...item}/>)}
-                    
-                </div>
-
-                <div className="split left">
-                    <h4>Your items</h4>
-                    {userItems.map(item => <Item user={true} key={item.id} sellItem={sellItem} {...item}/>)}
-
-                </div>
-
-                <div className="store-gundams">
-                    <h4>Gundams for sale</h4>
+                </div> 
+                :
+                <div className="gundam-grid">
+                    <h2 style={{color: "white"}}>Gundams for sale</h2>
+                <center>
+                    <button className="store-button" onClick={this.toggleShow}>{this.state.showItems ? "Show Gundams" : "Show Items"}</button>
+                </center>
                     {gfs.map(gundam => <StoreGundam key={gundam.id} {...gundam} buyGundam={buyGundam}/>)}
                 </div>
-
+                }      
+                <div className="user-items">
+                <h3 className="item-title">Your Items</h3>
+                    {userItems.map(item => <Item user={true} key={item.id} sellItem={sellItem} {...item}/>)}
+                </div>
+                <div className="user-info">
+                <h3>Welcome to the Shop</h3>
+                <h3>Use your earnings to buy Upgrades for your gundam</h3>
+                <h3>Or sell old parts for cash</h3>
+                    <p>Balance: {currentUser.balance} credits</p>
+                    
+                </div>
 
             </div>
         );

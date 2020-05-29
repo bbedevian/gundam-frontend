@@ -2,11 +2,16 @@
   text-align: center;
 }
 
-body {
+/* body {
   background-image: url("./BattleBackgrounds/GundamCity.jpg"); 
   background-attachment: fixed;
   height: 805px;
   width: auto;
+} */
+input {
+  height: 30px;
+  width: 200px;
+  font-size: 25px;
 }
 
 .App-logo {
@@ -44,12 +49,31 @@ body {
   }
 }
 
-.simple-flex-row {
+.nav-bar {
+  border: solid 1px #6D6D6D;
+  position: fixed;
   align-items: center;
-  height: 30px;
+  height: 50px;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  z-index: 1000;
+
+}
+
+.nav-item {
+  background: url("./BattleBackgrounds/gunmetal.jpg") center;
+  background-size: 300px 160px;
+  color: black;
+  padding: 17px;
+  padding-right: 50px;
+  padding-left:50px;
+  text-decoration: none;
+}
+
+.nav-item:hover {
+  color: white;
+  /* border: solid white; */
+  background:  rgba(17, 0, 255, 0.4)
 }
 
 .right-corner {
@@ -58,13 +82,14 @@ body {
 
 
 .split {
+  margin-top: 50px;
   height: 100%;
   display: inline-block;
   width: 50%;
-  position: flex;
+  position: fixed;
   z-index: 1;
   top: 100;
-  padding-top: 20px;
+  padding: 10px;
   background-color: transparent;
 }
 
@@ -78,19 +103,20 @@ body {
 }
 
 .image600{
-  width:100%;
-  max-width:600px;
+  max-height:600px;
+  max-width: 700px;
 }
 
-.battlefield{
+/* .battlefield{
   background-image: url("./BattleBackgrounds/GundamCity.jpg");
   height: 805px;
   width: auto;
-}
+} */
 
 .battlefieldtext{
-  background-color: white;
-  width: auto;
+  background-color: rgba(0,0,0,.5);
+  color: white;
+  width: fit-content;
 }
 
 @keyframes attack-right {
@@ -110,14 +136,91 @@ body {
   border: solid rgba(69, 250, 13, 0.7);
   position: relative;
   padding: 10px;
-  margin-left: 10px;
+  margin: 30px;
   color: white;
   background-color: rgba(0,0,0,.5)
 }
 
+.login{
+  z-index: 1003;
+  border: solid rgba(69, 250, 13, 0.7);
+  background-color: rgba(0,0,0,.5);
+  color: white;
+  transform: translateX(150%)translateY(150%);
+  width: fit-content;
+  padding: 20px;
+}
+
 .profile-page{
   background-image: url("./BattleBackgrounds/hangar.jpg"); 
-  background-size: 1300px;
+  background-size: 1510px;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  display: grid;
+  grid-template-columns: auto auto;
+  padding: 11px;
+}
+.welcome{
+  background-image: url("./BattleBackgrounds/welcome.gif");
+  background-attachment: fixed;
+  margin-top: -80px;
+  height: 900px;
+  width: 1436px;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  align-content: center;
+  justify-content: center;
+}
+.level1{
+  background-image: url("./BattleBackgrounds/level1.jpg");
+  background-attachment: fixed;
+  height: 800px;
+  background-repeat: no-repeat;
+  display: grid;
+  grid-template-columns: auto auto;
+  background-size: 100%;
+}
+.level2{
+  background-image: url("./BattleBackgrounds/level2.jpg"); 
+  background-attachment: fixed;
+  height: 800px;
+  background-repeat: no-repeat;
+  display: grid;
+  grid-template-columns: auto auto;
+  background-size: 100%;
+}
+.level3{
+  background-image: url("./BattleBackgrounds/level3.jpg"); 
+  background-attachment: fixed;
+  height: 800px;
+  background-repeat: no-repeat;
+  display: grid;
+  grid-template-columns: auto auto;
+  background-size: 100%;
+}
+.level4{
+  background-image: url("./BattleBackgrounds/level4.jpg"); 
+  background-attachment: fixed;
+  height: 800px;
+  background-repeat: no-repeat;
+  display: grid;
+  grid-template-columns: auto auto;
+  background-size: 100%;
+}
+
+.battle-select {
+  background-image: url("./BattleBackgrounds/hangar.jpg"); 
+  background-size: 1510px;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  display: grid;
+  grid-template-columns: auto auto;
+  padding: 11px;
+}
+
+.shop-container{
+  background-image: url("./BattleBackgrounds/hangar.jpg"); 
+  background-size: 1510px;
   background-repeat: no-repeat;
   background-attachment: fixed;
   display: grid;
@@ -126,24 +229,102 @@ body {
 }
 
 .user-info{
-  margin-left: 10em;
-  position: relative;
+  margin-left: 55em;
+  position: absolute;
+  margin-top: 100px;
+  border: solid rgba(69, 250, 13, 0.7);
+  background-color: rgba(0,0,0,.5);
+  color: white;
+  text-align: center;
+  text-justify: center;
+  padding: 10px;
 }
 
+.profile-user-info{
+  margin-left: 65em;
+  position: absolute;
+  margin-top: 70px;
+  border: solid rgba(69, 250, 13, 0.7);
+  background-color: rgba(0,0,0,.5);
+  color: white;
+  text-align: center;
+  text-justify: center;
+  padding: 10px;
+}
 .gundam-grid{
   display: grid;
   grid-template-columns: auto auto;
+  margin-top: 100px;
+  width: 50em;
+  align-content: center;
+  justify-content: center;
+  border: solid rgba(69, 250, 13, 0.7);
+  background-color: rgba(0,0,0,.5);
+  color: white;
+}
+
+.battle-button {
+	box-shadow:inset 0px 1px 0px 0px #f29c93;
+	background:linear-gradient(to bottom, #fe1a00 5%, #ce0100 100%);
+	background-color:#fe1a00;
+	border-radius:6px;
+	border:1px solid #d83526;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:28px;
+	font-weight:bold;
+	padding:32px 76px;
+	text-decoration:none;
+  text-shadow:0px 1px 0px #b23e35;
+  transform: translateX(235%)translateY(-874%)
+}
+.battle-button:hover {
+	background:linear-gradient(to bottom, #ce0100 5%, #fe1a00 100%);
+	background-color:#ce0100;
+}
+.battle-button:active {
+	position:relative;
+	top:1px;
+}
+
+.level-select{
+  margin-top: 100px;
+  height: 180px;
+  align-content: center;
+  justify-content: center;
+  border: solid rgba(69, 250, 13, 0.7);
+  background-color: rgba(0,0,0,.5);
+  color: white;
 }
 
 .user-items{
   display: grid;
   grid-template-columns: auto auto;
-  margin-left: 50em;
+  margin-left: 60em;
   position: absolute;
-  margin-top: 150px;
+  margin-top: 350px;
   border: solid rgba(69, 250, 13, 0.7);
   background-color: rgba(0,0,0,.5);
   color: white;
+}
+
+.store-items {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  margin-top: 100px;
+  border: solid rgba(69, 250, 13, 0.7);
+  background-color: rgba(0,0,0,.5);
+  width: 700px;
+  margin-left: 30px;
+  justify-content: center;
+}
+
+.store-button {
+  display: inline-flex;
+  float: right;
+  margin-top: 20px;
 }
 
 .item-card {
@@ -165,9 +346,130 @@ body {
 
 
 .image200{
-  width:100%;
-  max-width:200px;
+  max-height: 200px;
+  max-width: 250px;
   opacity: none;
 }
 
+.hp-bar{
+  background-color: red;
+  border-radius: 3px;
+  border: 1px solid black; 
+  width: 550px;
+}
+
+.current-hp{
+  height: 100%;
+  min-height: 24px;
+  background-color: green;
+  z-index: -1;
+  border: 1px solid black;
+}
+
+.attack-button {
+	box-shadow:inset 0px 1px 0px 0px #ffffff;
+	background:linear-gradient(to bottom, #ffffff 5%, #f6f6f6 100%);
+	background-color:#ffffff;
+	border-radius:6px;
+	border:1px solid #dcdcdc;
+	display:inline-block;
+	cursor:pointer;
+	color:#666666;
+	font-family:Arial;
+	font-size:23px;
+	font-weight:bold;
+	padding:18px 35px;
+	text-decoration:none;
+  text-shadow:0px 1px 0px #ffffff;
+  position: fixed;
+  transform: translateX(370%)translateY(974%);
+  z-index: 1001;
+}
+.end-button{
+  box-shadow:inset 0px 1px 0px 0px #ffffff;
+	background:linear-gradient(to bottom, #ffffff 5%, #f6f6f6 100%);
+	background-color:#ffffff;
+	border-radius:6px;
+  border:1px solid #dcdcdc;
+  cursor:pointer;
+  font-family:Arial;
+	font-size:23px;
+	font-weight:bold;
+  padding:18px 35px;
+  color:#666666;
+  text-decoration:none;
+  text-shadow:0px 1px 0px #ffffff;
+  z-index: 1002;
+  transform: translateX(250%)
+}
+.end-button:hover {
+	background:linear-gradient(to bottom, #f6f6f6 5%, #ffffff 100%);
+	background-color:#f6f6f6;
+}
+.end-button:active {
+	position:relative;
+	top:1px;
+}
+.attack-button:hover {
+	background:linear-gradient(to bottom, #f6f6f6 5%, #ffffff 100%);
+	background-color:#f6f6f6;
+}
+.attack-button:active {
+	position:relative;
+	top:1px;
+}
+
+.victory {
+  background-image: url("./BattleBackgrounds/victory.gif");
+  background-attachment: fixed;
+  margin-top: -80px;
+  height: 900px;
+  width: 1436px;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  align-content: center;
+  justify-content: center;
+}
+.defeat {
+  background-image: url("./BattleBackgrounds/defeat.gif");
+  background-attachment: fixed;
+  margin-top: -80px;
+  height: 900px;
+  width: 1436px;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  align-content: center;
+  justify-content: center;
+}
+.text1 {
+  padding-left: 500px;
+  padding-top: 300px;
+  font-size: 100px;
+  color: white;
+}
+.login-button{
+  box-shadow:inset 0px 1px 0px 0px #ffffff;
+	background:linear-gradient(to bottom, #ffffff 5%, #f6f6f6 100%);
+	background-color:#ffffff;
+	border-radius:6px;
+  border:1px solid #dcdcdc;
+  cursor:pointer;
+  font-family:Arial;
+	font-size:23px;
+	font-weight:bold;
+  padding:6px 10px 3px 10px;
+  color:#666666;
+  text-decoration:none;
+  text-shadow:0px 1px 0px #ffffff;
+  z-index: 1002;
+}
+.login-button:hover {
+	background:linear-gradient(to bottom, #f6f6f6 5%, #ffffff 100%);
+	background-color:#f6f6f6;
+}
+.login-button:active {
+	position:relative;
+	top:1px;
+}
 @import url("https://fonts.googleapis.com/css?family=Arizonia")
+

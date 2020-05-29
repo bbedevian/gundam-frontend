@@ -4,25 +4,11 @@ import { Link, NavLink } from 'react-router-dom';
 const Nav = props => {
     
     return (
-        <div className="simple-flex-row">
+        <div className="nav-bar">
             {/* <Link to="/">Home</Link> */}
-            <Link to="/profile">Profile</Link>
-            <Link to="/shop">Shop</Link>
-            <Link to="/battlefield">Battlefield</Link>
-            <div className="simple-flex-row right-corner">
-                {props.currentUserId === null ? 
-                <>
-                {/* <Link to="/login">Login</Link> */}
-                {/* <Link to="/signup">Signup</Link> */}
-                </>
-                : 
-                <> 
-                {/* <Link to="/profile">Profile</Link>  */}
-                {/* <Link to="/logout">Logout</Link> */}
-                </> }
-            </div>
-
-      
+            <Link className="nav-item" to="/profile">To Profile</Link>
+            <Link className="nav-item" to="/shop">To Shop</Link>
+            <Link className="nav-item" to="/battlefield">Battlefield</Link>      
         </div>
     )
 }

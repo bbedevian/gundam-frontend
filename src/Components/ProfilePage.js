@@ -102,8 +102,11 @@ class ProfilePage extends Component {
                 unequipItem={unequipItem}
                 userItems={userItems}/>)}
                 </div>
-                <div className="user-info">
-                <h3>{currentUser.balance}</h3>
+                <div className="profile-user-info">
+                    <h2>User information</h2> 
+                    <h2>{currentUser.name}</h2>
+                    <h3>Balance: {currentUser.balance} credits</h3>
+                    <h3>Current Level: {currentUser.level} </h3>
                 </div>
 
                 <div className="user-items">
