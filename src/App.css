@@ -129,7 +129,15 @@ input {
   animation-name: attack-right;
   animation-duration: 4s;
 }
-
+.attack-left{
+  animation-name: attack-left;
+  animation-duration: 4s;
+}
+@keyframes attack-left {
+  from { transform : translateX(0) }
+    50%  { transform : translateX(-250px) }
+    to   { transform : translateX(0%) }
+}
 .profile-gundam {
   max-height: auto;
   max-width: 250px;
