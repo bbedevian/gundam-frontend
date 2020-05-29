@@ -4,7 +4,7 @@ import HpBar from './HpBar'
 
 class EnemyGundam extends Component {
 
-
+    
     render() {
         const {opponents, myTurn, getAttacked, opponentHealth, opponentTotalHealth, currentUser, selectedLevel} = this.props
         console.log('enemy gundam props :>> ', this.props);
